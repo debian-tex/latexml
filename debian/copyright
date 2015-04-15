@@ -1,0 +1,44 @@
+This work was packaged for Debian by:
+
+    Peter Ralph <petrel.harp@gmail.com> on Wed, 25 Feb 2015 08:15:06 -0800
+
+It was downloaded from http://dlmf.nist.gov/LaTeXML/
+
+Upstream Author: Bruce Miller <bruce.miller@nist.gov>
+
+License:
+
+    Public domain software, produced as part of work done by the
+    United States Government & not subject to copyright in the US.
+
+LaTeXML contains files with different copyright.
+
+* t/theorem/amstheorem.tex
+
+%%%   author    = "American Mathematical Society",
+%%%   copyright = "Copyright 1996, 2004 American Mathematical Society,
+%%%                all rights reserved.  Copying of this file is
+%%%                authorized only if either:
+%%%                (1) you make absolutely no changes to your copy,
+%%%                including name; OR
+%%%                (2) if you do make changes, you first rename it
+%%%                to some other name.",
+
+License:
+
+    This work may be distributed and/or modified under the
+    conditions of the LaTeX Project Public License, either version 1.3c
+    of this license or (at your option) any later version.
+    The latest version of this license is in
+      http://www.latex-project.org/lppl.txt
+    and version 1.3c or later is part of all distributions of LaTeX
+    version 2005/12/01 or later.
+
+
+The Debian packaging is:
+
+    Copyright (C) 2015 Peter Ralph <petrel.harp@gmail.com>
+
+and is licensed under the GPL version 3,
+see "/usr/share/common-licenses/GPL-3".
+

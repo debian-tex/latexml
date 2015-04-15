@@ -1,0 +1,66 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+build: build-arch build-indep
+build-arch: build-stamp
+build-indep: build-stamp
+build-stamp:
+	dh_testdir
+	# Add here commands to compile the package.
+	perl Makefile.PL INSTALLDIRS=vendor
+	$(MAKE)
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+
+	if [ -f Makefile ]; then $(MAKE) clean ;fi
+	rm -f Makefile.old
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	$(MAKE) pure_install INSTALLDIRS=vendor DESTDIR=`pwd`/debian/`dh_listpackages` \
+	INSTALLTEXMFDIR=/usr/share/texmf/tex/latex/latexml
+	find debian/latexml -type f -name .packlist | xargs rm -f
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs
+	dh_installexamples
+	dh_installman
+	dh_link
+	dh_compress
+	dh_fixperms
+	dh_perl
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+make-orig-tar:
+	v=`dpkg-parsechangelog --show-field version | sed -e s/-.*$$//` ;\
+	d=latexml-$$v; rm -rf $$d ; mkdir $$d ; git checkout v$$v ; \
+	git checkout-index -a -f --prefix=$$d/ ; git checkout master ; \
+	tar -cvzf latexml_$$v.orig.tar.gz $$d ; rm -rf $$d
+
+# Build architecture-dependent files here.
+binary-arch: build-stamp
+# We have nothing to do by default.
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

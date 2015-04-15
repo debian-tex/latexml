@@ -1,0 +1,12 @@
+latexml for Debian
+------------------
+
+To convert a TeX file, mydoc.tex to XML, and then to XHTML+MathML would be:
+
+   latexml --dest=mydoc.xml mydoc
+   latexmlpost -dest=somewhere/mydoc.xhtml mydoc.xml
+
+This will carry out a default transformation into XHTML+MathML. 
+If you give the destination extension with html, it will generate HTML+images. 
+
+ -- Peter Ralph <petrel.harp@gmail.com>  Tue, 24 Feb 2015 21:53:34 -0800

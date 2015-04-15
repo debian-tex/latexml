@@ -1,0 +1,38 @@
+latexml (0.8.1-1) unstable; urgency=medium
+
+  * New upstream release (0.8.1) (Closes: #773943)
+  * New maintainer with agreement from retired former maintainer 
+    Atsuhito Kohda, thanks for his work!
+
+ -- Peter Ralph <petrel.harp@gmail.com>  Wed, 15 Apr 2015 15:09:45 +0900
+
+latexml (0.8.0-1) unstable; urgency=medium
+
+  * New upstream release (0.8.0).
+  * Added libfile-which-perl, libuuid-tiny-perl, libimage-size-perl,
+    libarchive-zip-perl, libio-string-perl, libjson-xs-perl, libwww-perl,
+    liburi-perl and texlive-latex-base to Depends field.
+  * Added libimage-size-perl, libarchive-zip-perl, libfile-which-perl,
+    libio-string-perl, libjson-xs-perl, liburi-perl, libwww-perl,
+    libxml-libxml-perl, libxml-libxslt-perl, texlive-latex-base to
+    Build-Depends field.
+  * For non-ascii characters, it seems necessary to add the option
+    "--inputencoding=utf8" with "latexml", "latexmlpost" seems work fine
+    without special option, however.
+  * Bump Standards-Version to 3.9.5 (no changes needed).
+
+ -- Atsuhito KOHDA <kohda@debian.org>  Wed, 07 May 2014 16:05:06 +0900
+
+latexml (0.7.0-1) unstable; urgency=low
+
+  * Initial release.  (Closes: #585702)
+  * Added comments on the files with different copyright in debian/copyright.
+   + t/theorem/amstheorem.tex (generated from thmtest.tex)
+     This file is used only for test latexml.
+   + files under lib/LaTeXML/Package/.  There are three kind of groups.
+    - revsymb.sty.ltxml revtex.cls.ltxml amscd.sty.ltxml amsthm.sty.ltxml
+    - revtex.sty.ltxml
+    - revtex4_support.sty.ltxml revtex4.cls.ltxml revtex4.sty.ltxml
+      revtex3_support.sty.ltxml
+
+ -- Atsuhito KOHDA <kohda@debian.org>  Wed, 09 Jun 2010 08:15:06 +0900

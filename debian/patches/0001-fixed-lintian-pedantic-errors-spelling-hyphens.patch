@@ -1,0 +1,183 @@
+From: peter <petrel.harp@gmail.com>
+Date: Sun, 29 Mar 2015 16:12:22 -0700
+Subject: fixed lintian pedantic errors: spelling, hyphens
+
+---
+ bin/latexmlfind                                      | 2 +-
+ doc/manual/manual.tex                                | 4 ++--
+ lib/LaTeXML/Core/Definition/Constructor.pm           | 2 +-
+ lib/LaTeXML/Core/Document.pm                         | 2 +-
+ lib/LaTeXML/MathParser.pm                            | 4 ++--
+ lib/LaTeXML/Package.pm                               | 6 +++---
+ lib/LaTeXML/Post/MathML.pm                           | 2 +-
+ lib/LaTeXML/Util/Pathname.pm                         | 2 +-
+ lib/LaTeXML/resources/XSLT/LaTeXML-webpage-xhtml.xsl | 2 +-
+ tools/latexmllint                                    | 2 +-
+ 10 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/bin/latexmlfind b/bin/latexmlfind
+index 34196fa..a9cada0 100755
+--- a/bin/latexmlfind
++++ b/bin/latexmlfind
+@@ -174,7 +174,7 @@ __END__
+ 
+ =head1 NAME
+ 
+-C<latexmlfind> finds interesting things in LaTeXML generated XML.
++C<latexmlfind> - finds interesting things in LaTeXML generated XML.
+ 
+ =head1 SYNOPSIS
+ 
+diff --git a/doc/manual/manual.tex b/doc/manual/manual.tex
+index 80ab702..16c3080 100644
+--- a/doc/manual/manual.tex
++++ b/doc/manual/manual.tex
+@@ -97,7 +97,7 @@
+ % \part{Basics}
+ %%%======================================================================
+ \chapter{Introduction}\label{intro}
+-For many, \LaTeX\ is the prefered format for document authoring, particularly those
++For many, \LaTeX\ is the preferred format for document authoring, particularly those
+ involving significant mathematical content and where quality typesetting is desired.
+ On the other hand, content-oriented \XML\ is an extremely useful representation for documents,
+ allowing them to be used, and reused, for a variety of purposes, not least, 
+@@ -2282,7 +2282,7 @@ When the target format is in the HTML family (XHTML, HTML or HTML5),
+ \LaTeXML\ adds various classes to the generated html elements.
+ This provides a trail back to the originating markup,
+ and leverage to apply CSS styling to the results.
+-Recall that the class attribute is a space-seperated list of class names.
++Recall that the class attribute is a space-separated list of class names.
+ This appendix describes the class names used.
+ 
+ The basic strategy is the following:
+diff --git a/lib/LaTeXML/Core/Definition/Constructor.pm b/lib/LaTeXML/Core/Definition/Constructor.pm
+index e60fe7d..f1ad355 100644
+--- a/lib/LaTeXML/Core/Definition/Constructor.pm
++++ b/lib/LaTeXML/Core/Definition/Constructor.pm
+@@ -155,7 +155,7 @@ C<LaTeXML::Core::Definition::Constructor>  - Control sequence definitions.
+ 
+ This class represents control sequences that contribute arbitrary XML fragments
+ to the document tree.  During digestion, a C<LaTeXML::Core::Definition::Constuctor> records the arguments 
+-used in the invokation to produce a L<LaTeXML::Core::Whatsit>.  The resulting L<LaTeXML::Core::Whatsit>
++used in the invocation to produce a L<LaTeXML::Core::Whatsit>.  The resulting L<LaTeXML::Core::Whatsit>
+ (usually) generates an XML document fragment when absorbed by an instance of L<LaTeXML::Core::Document>.
+ Additionally, a C<LaTeXML::Core::Definition::Constructor> may have beforeDigest and afterDigest daemons
+ defined which are executed for side effect, or for adding additional boxes to the output.
+diff --git a/lib/LaTeXML/Core/Document.pm b/lib/LaTeXML/Core/Document.pm
+index 8c2bf20..494ae2e 100644
+--- a/lib/LaTeXML/Core/Document.pm
++++ b/lib/LaTeXML/Core/Document.pm
+@@ -1893,7 +1893,7 @@ on the appropriate representation.
+ =item C<< $document->setAttribute($node,$key,$value); >>
+ 
+ Sets the attribute C<$key> to C<$value> on C<$node>.
+-This method is prefered over the direct LibXML one, since it
++This method is preferred over the direct LibXML one, since it
+ takes care of decoding namespaces (if C<$key> is a qname),
+ and also manages recording of xml:id's.
+ 
+diff --git a/lib/LaTeXML/MathParser.pm b/lib/LaTeXML/MathParser.pm
+index 7102a3e..ed397d7 100644
+--- a/lib/LaTeXML/MathParser.pm
++++ b/lib/LaTeXML/MathParser.pm
+@@ -1010,7 +1010,7 @@ my %balanced = (    # [CONSTANT]
+   "\x{230A}" => "\x{230B}",    # lfloor, rfloor
+   "\x{2308}" => "\x{2309}",    # lceil, rceil
+   "\x{2329}" => "\x{232A}",    # angle brackets; NOT mathematical, but balance in case they show up.
+-  "\x{27E8}" => "\x{27E9}",    # angle brackets (prefered)
++  "\x{27E8}" => "\x{27E9}",    # angle brackets (preferred)
+   "\x{2225}" => "\x{2225}",    # lVert, rVert
+ );
+ # For enclosing a single object
+@@ -1316,7 +1316,7 @@ Create a new C<XMApp> node representing the application of the node
+ C<$op> to the arguments found in C<@stuff>.  C<@stuff> are 
+ delimited arguments in the sense that the leading and trailing nodes
+ should represent open and close delimiters and the arguments are
+-seperated by punctuation nodes.  The text of these delimiters and
++separated by punctuation nodes.  The text of these delimiters and
+ punctuation are used to annotate the operator node with
+ C<argopen>, C<argclose> and C<separator> attributes.
+ 
+diff --git a/lib/LaTeXML/Package.pm b/lib/LaTeXML/Package.pm
+index ffa3ff0..0584be3 100644
+--- a/lib/LaTeXML/Package.pm
++++ b/lib/LaTeXML/Package.pm
+@@ -2988,7 +2988,7 @@ This is used by environments and math.
+ =item C<nargs=E<gt>I<nargs>>
+ 
+ This gives a number of args for cases where it can't be infered directly
+-from the I<prototype> (eg. when more args are explictly read by hooks).
++from the I<prototype> (eg. when more args are explicitly read by hooks).
+ 
+ =back
+ 
+@@ -3153,7 +3153,7 @@ but it applies to the C<\begin{environment}> control sequence.
+ 
+ This hook is similar to C<DefConstructor>'s C<afterDigest>
+ but it applies to the C<\begin{environment}> control sequence.
+-The Whatsit is the one for the begining control sequence,
++The Whatsit is the one for the beginning control sequence,
+ but represents the environment as a whole.
+ Note that although the arguments and properties are present in
+ the Whatsit, the body of the environment is I<not> yet available!
+@@ -3176,7 +3176,7 @@ This option supplies a hook to be executed during digestion
+ after the ending control sequence has been digested (and all the 4
+ other digestion hook have executed) and after
+ the body of the environment has been obtained.
+-The Whatsit is the (usefull) one representing the whole
++The Whatsit is the (useful) one representing the whole
+ environment, and it now does have the body and trailer available,
+ stored as a properties.
+ 
+diff --git a/lib/LaTeXML/Post/MathML.pm b/lib/LaTeXML/Post/MathML.pm
+index 1b2d7ab..97b6169 100644
+--- a/lib/LaTeXML/Post/MathML.pm
++++ b/lib/LaTeXML/Post/MathML.pm
+@@ -712,7 +712,7 @@ my %fences = (                                                    # CONSTANT
+   '(' => 1, ')' => 1, '[' => 1, ']' => 1, '{' => 1, '}' => 1, "\x{201C}" => 1, "\x{201D}" => 1,
+   "\`" => 1, "'" => 1, "<" => 1, ">" => 1,
+   "\x{2329}" => 1, "\x{232A}" => 1, # angle brackets; NOT mathematical, but balance in case they show up.
+-  "\x{27E8}" => 1, "\x{27E9}" => 1,                                      # angle brackets (prefered)
++  "\x{27E8}" => 1, "\x{27E9}" => 1,                                      # angle brackets (preferred)
+   "\x{230A}" => 1, "\x{230B}" => 1, "\x{2308}" => 1, "\x{2309}" => 1);
+ 
+ my %punctuation = (',' => 1, ';' => 1, "\x{2063}" => 1);                 # CONSTANT
+diff --git a/lib/LaTeXML/Util/Pathname.pm b/lib/LaTeXML/Util/Pathname.pm
+index d9a690f..2d8d2d5 100644
+--- a/lib/LaTeXML/Util/Pathname.pm
++++ b/lib/LaTeXML/Util/Pathname.pm
+@@ -344,7 +344,7 @@ C<LaTeXML::Util::Pathname>  - portable pathname and file-system utilities
+ =head1 DESCRIPTION
+ 
+ This module combines the functionality L<File::Spec> and L<File::Basename> to
+-give a consistent set of filename utilties for LaTeXML.
++give a consistent set of filename utilities for LaTeXML.
+ A pathname is represented by a simple string.
+ 
+ =head2 Pathname Manipulations
+diff --git a/lib/LaTeXML/resources/XSLT/LaTeXML-webpage-xhtml.xsl b/lib/LaTeXML/resources/XSLT/LaTeXML-webpage-xhtml.xsl
+index f12db50..c5f2908 100644
+--- a/lib/LaTeXML/resources/XSLT/LaTeXML-webpage-xhtml.xsl
++++ b/lib/LaTeXML/resources/XSLT/LaTeXML-webpage-xhtml.xsl
+@@ -522,7 +522,7 @@
+ 
+   <xsl:strip-space elements="ltx:TOC ltx:toclist ltx:tocentry"/>
+ 
+-  <!-- explictly requested TOC -->
++  <!-- explicitly requested TOC -->
+   <xsl:template match="ltx:TOC[@format='short']">
+     <xsl:param name="context"/>
+     <xsl:apply-templates mode="short">
+diff --git a/tools/latexmllint b/tools/latexmllint
+index fd3040a..56b0d29 100755
+--- a/tools/latexmllint
++++ b/tools/latexmllint
+@@ -308,7 +308,7 @@ C<latexmllint> I<options> I<files> ...
+ =head1 SYNOPSIS
+ 
+ A tool for establish consistent coding standards for LaTeXML.
+-Code formatting is implemented by C<perltidy>,  using a prefered set of formatting rules.
++Code formatting is implemented by C<perltidy>,  using a preferred set of formatting rules.
+ Coding standards is checked by C<perlcritic>, again, using
+ a prefered set of Policies.
+ 
