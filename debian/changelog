@@ -1,4 +1,4 @@
-latexml (0.8.1-2~1) UNRELEASED; urgency=medium
+latexml (0.8.2-1) UNRELEASED; urgency=medium
 
   [ Peter Ralph ]
   * switched dependency from transitional package perlmagick to 
@@ -8,8 +8,9 @@ latexml (0.8.1-2~1) UNRELEASED; urgency=medium
   * install manual.pdf into texmf/doc and /u/s/d/latexml
   * call dh_installtex to make sure ls-R is uptodate
   * don't run mktexlsr during installation
+  * update to 0.8.2
 
- -- Norbert Preining <preining@debian.org>  Sun, 08 Nov 2015 13:46:20 +0900
+ -- Norbert Preining <preining@debian.org>  Mon, 26 Feb 2018 09:23:33 +0900
 
 latexml (0.8.1-1) unstable; urgency=medium
 

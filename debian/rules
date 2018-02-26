@@ -10,7 +10,7 @@ build-indep: build-stamp
 build-stamp:
 	dh_testdir
 	# Add here commands to compile the package.
-	perl Makefile.PL INSTALLDIRS=vendor
+	perl Makefile.PL INSTALLDIRS=vendor NOMKTEXLSR=1
 	$(MAKE)
 
 	touch build-stamp
