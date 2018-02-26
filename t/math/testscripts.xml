@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?latexml class="article"?>
+<?latexml RelaxNGSchema="LaTeXML"?>
+<document xmlns="http://dlmf.nist.gov/LaTeXML">
+  <resource src="LaTeXML.css" type="text/css"/>
+  <resource src="ltx-article.css" type="text/css"/>
+  <para xml:id="p1">
+    <equation xml:id="S0.Ex1">
+      <Math mode="display" xml:id="S0.Ex1.m1" tex="f_{a},f^{a},f_{a}^{a},f^{a}_{a}" text="list@(f _ a, f ^ a, (f _ a) ^ a, (f ^ a) _ a)">
+        <XMath>
+          <XMDual>
+            <XMApp>
+              <XMTok meaning="list"/>
+              <XMRef idref="XM1"/>
+              <XMRef idref="XM2"/>
+              <XMRef idref="XM3"/>
+              <XMRef idref="XM4"/>
+            </XMApp>
+            <XMWrap>
+              <XMApp xml:id="XM1">
+                <XMTok role="SUBSCRIPTOP" scriptpos="post2"/>
+                <XMTok role="UNKNOWN" font="italic">f</XMTok>
+                <XMTok role="UNKNOWN" font="italic">a</XMTok>
+              </XMApp>
+              <XMTok role="PUNCT">,</XMTok>
+              <XMApp xml:id="XM2">
+                <XMTok role="SUPERSCRIPTOP" scriptpos="post2"/>
+                <XMTok role="UNKNOWN" font="italic">f</XMTok>
+                <XMTok role="UNKNOWN" font="italic">a</XMTok>
+              </XMApp>
+              <XMTok role="PUNCT">,</XMTok>
+              <XMApp xml:id="XM3">
+                <XMTok role="SUPERSCRIPTOP" scriptpos="post2"/>
+                <XMApp>
+                  <XMTok role="SUBSCRIPTOP" scriptpos="post2"/>
+                  <XMTok role="UNKNOWN" font="italic">f</XMTok>
+                  <XMTok role="UNKNOWN" font="italic">a</XMTok>
+                </XMApp>
+                <XMTok role="UNKNOWN" font="italic">a</XMTok>
+              </XMApp>
+              <XMTok role="PUNCT">,</XMTok>
+              <XMApp xml:id="XM4">
+                <XMTok role="SUBSCRIPTOP" scriptpos="post2"/>
+                <XMApp>
+                  <XMTok role="SUPERSCRIPTOP" scriptpos="post2"/>
+                  <XMTok role="UNKNOWN" font="italic">f</XMTok>
+                  <XMTok role="UNKNOWN" font="italic">a</XMTok>
+                </XMApp>
+                <XMTok role="UNKNOWN" font="italic">a</XMTok>
+              </XMApp>
+            </XMWrap>
+          </XMDual>
+        </XMath>
+      </Math>
+    </equation>
+  </para>
+  <para xml:id="p2">
+    <p><Math mode="inline" xml:id="p2.m1" tex="{}_{a}" text="_a"><XMath><XMApp role="FLOATSUBSCRIPT" scriptpos="2"><XMTok role="UNKNOWN" font="italic">a</XMTok></XMApp></XMath></Math>, <Math mode="inline" xml:id="p2.m2" tex="{}^{a}" text="^a"><XMath><XMApp role="FLOATSUPERSCRIPT" scriptpos="2"><XMTok role="UNKNOWN" font="italic">a</XMTok></XMApp></XMath></Math></p>
+  </para>
+</document>
