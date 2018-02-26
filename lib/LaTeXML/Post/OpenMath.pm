@@ -84,12 +84,6 @@ sub combineParallel {
         ['om:OMSTR', {}, $string]); }
     # anything else ignore?
   }
-  # Throw in a TeX encoding, for good measure. Should be own processor?
-  my $math = $xmath->parentNode;
-  if (my $tex = $math && isElementNode($math) && $math->getAttribute('tex')) {
-    push(@attr,
-      ['om:OMS', { cd => 'Alternate', name => 'TeX' }],
-      ['om:OMFOREIGN', {}, $tex]); }              # Should this simply be OMSTR ???
   return { processor => $self,
     mimetype => $omMimeType,
     xml => ['om:OMATTR', {}, @attr, $$primary{xml}] }; }
@@ -144,6 +138,17 @@ sub om_expr_aux {
     return &$sub($node); }
   elsif ($tag eq 'ltx:XMHint') {
     return (); }
+  elsif ($tag eq 'ltx:XMText') {
+    if (scalar(element_nodes($node))) {    # If it has markup?
+      return ['om:OMATTR', {},
+        ['om:OMATP', {},
+          ['om:OMS', { cd => 'OMDoc', name => 'verbalizes' }],
+          ['om:OMFOREIGN', { encoding => 'mtext' },
+            $LaTeXML::Post::MATHPROCESSOR->convertXMTextContent($LaTeXML::Post::DOCUMENT, 0,
+              $node->childNodes)]],
+        ['om:OMS', { cd => 'OMDoc', name => 'infObj' }]] }
+    else {
+      return ['om:OMSTR', {}, $node->textContent]; } }
   else {
     return ['om:OMSTR', {}, $node->textContent]; } }
 
@@ -193,7 +198,7 @@ DefOpenMath('Token:?:?', sub {
       my $cd = $token->getAttribute('omcd') || 'latexml';
       return ['om:OMS', { name => $meaning, cd => $cd }]; }
     else {
-      my ($name, %mmlattr) = LaTeXML::Post::MathML::stylizeContent($token, 1);
+      my ($name, %mmlattr) = LaTeXML::Post::MathML::stylizeContent($token, 'om:OMV');
       if (my $mv = $mmlattr{mathvariant}) {
         $name = $mv . "-" . $name; }
       return ['om:OMV', { name => $name }]; } });

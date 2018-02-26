@@ -18,6 +18,10 @@
 \DeclareOption{noids}{}
 \DeclareOption{comments}{}
 \DeclareOption{nocomments}{}
+\DeclareOption{profiling}{}
+\DeclareOption{noprofiling}{}
+\DeclareOption{mathparserspeculate}{}
+\DeclareOption{nomathparserspeculate}{}
 \ProcessOptions
 %======================================================================
 % NOTE: Figure out where this should go.
@@ -87,6 +91,29 @@
 \excludecomment{lxFooter}
 
 \def\lxKeywords#1{}
+%======================================================================
+% Table beautification.
+% Low-level support to mark column and row headers.
+% This really calls for styling, but why should we get into that game?
+% There are many other packages for that.
+
+% To mark the table head/foot (table column headers)
+% Put this before first table heading row
+\def\lxBeginTableHead{}
+% put this after the \\ ending the table heading.
+\def\lxEndTableHead{}
+% Ditto for table foot (last rows in table)
+\def\lxBeginTableFoot{}
+\def\lxEndTableFoot{}
+
+% To mark an individual cell as a column header
+\def\lxTableColumnHead{}
+% To mark an individual cell as a row header
+\def\lxTableRowHead{}
+% Easy way to mark a whole column as row headers:
+%  \usepackage{array}
+% then put this in the column spec
+%  >{\lxTableRowHead}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Declarative information for Mathematics
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -102,22 +129,6 @@
 % Define a math function such that the TeX output is what you might
 % expect, while providing the semantic hooks for generating useful xml.
 
-% \lxMathDef{cmd}[nargs][optional]{expansion}[semanticprops]
-\providecommand{\lxMathDef}{\lx@mathdef}
-\def\lx@mathdef#1{%
-  \@ifnextchar[{\lx@mathdef@a{#1}}{\lx@mathdef@a{#1}[0]}}
-\def\lx@mathdef@a#1[#2]{%
-  \@ifnextchar[{\lx@mathdef@opt{#1}[#2]}{\lx@mathdef@noopt{#1}[#2]}}
-\def\lx@mathdef@opt#1[#2][#3]#4{%
-  \providecommand{#1}[#2][#3]{#4}%
-  \@ifnextchar[{\lx@@skipopt}{}}
-\def\lx@mathdef@noopt#1[#2]#3{%
-  \providecommand{#1}[#2]{#3}%
-  \@ifnextchar[{\lx@@skipopt}{}}
-\def\lx@@skipopt[#1]{}
-
-% Are we supposed to define \lxMathDef or \lxDefMath?
-% [the latter's in the binding!]
 % \lxDefMath{\cs}[nargs][optargs]{presentation}[declarations]
 \providecommand{\lxDefMath}{\lx@defmath}
 \def\lx@defmath#1{%

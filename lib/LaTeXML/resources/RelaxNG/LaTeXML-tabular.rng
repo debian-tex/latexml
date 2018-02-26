@@ -48,6 +48,18 @@ The model is basically a copy of HTML4's table.</a:documentation>
         <ref name="Length.type"/>
       </attribute>
     </optional>
+    <optional>
+      <attribute name="rowsep">
+        <a:documentation>the spacing between rows</a:documentation>
+        <ref name="Length.type"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="colsep">
+        <a:documentation>the spacing between columns</a:documentation>
+        <ref name="Length.type"/>
+      </attribute>
+    </optional>
   </define>
   <define name="tabular_model">
     <a:documentation>Content model for \elementref{tabular}.</a:documentation>
@@ -199,8 +211,13 @@ for borders or doubled borders on any side of the cell.</a:documentation>
     </optional>
     <optional>
       <attribute name="thead">
-        <a:documentation>whether this cell corresponds to a table head or foot.</a:documentation>
-        <data type="boolean"/>
+        <a:documentation>whether this cell corresponds to a table row or column heading or both
+(whether in head or foot).</a:documentation>
+        <choice>
+          <value>column</value>
+          <value>column row</value>
+          <value>row</value>
+        </choice>
       </attribute>
     </optional>
   </define>

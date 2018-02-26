@@ -77,19 +77,20 @@ sub invoke {
   my ($self, $stomach) = @_;
   # Call any `Before' code.
   my $profiled = $STATE->lookupValue('PROFILING') && ($LaTeXML::CURRENT_TOKEN || $$self{cs});
-  LaTeXML::Core::Definition::startProfiling($profiled) if $profiled;
+  my $tracing = $STATE->lookupValue('TRACINGCOMMANDS');
+  LaTeXML::Core::Definition::startProfiling($profiled, 'digest') if $profiled;
 
   my @pre = $self->executeBeforeDigest($stomach);
 
-  if ($STATE->lookupValue('TRACINGCOMMANDS')) {
-    print STDERR '{' . $self->getCSName . "}\n"; }
+  print STDERR '{' . $self->tracingCSName . "}\n" if $tracing;
   # Get some info before we process arguments...
   my $font   = $STATE->lookupValue('font');
   my $ismath = $STATE->lookupValue('IN_MATH');
   # Parse AND digest the arguments to the Constructor
   my $params = $self->getParameters;
-  my @args   = ($params ? $params->readArgumentsAndDigest($stomach, $self) : ());
-  my $nargs  = $self->getNumArgs;
+  my @args = ($params ? $params->readArgumentsAndDigest($stomach, $self) : ());
+  print STDERR $self->tracingArgs(@args) . "\n" if $tracing && @args;
+  my $nargs = $self->getNumArgs;
   @args = @args[0 .. $nargs - 1];
 
   # Compute any extra Whatsit properties (many end up as element attributes)
@@ -108,14 +109,13 @@ sub invoke {
 
   # Now create the Whatsit, itself.
   my $whatsit = LaTeXML::Core::Whatsit->new($self, [@args], %props);
-
   # Call any 'After' code.
   my @post = $self->executeAfterDigest($stomach, $whatsit);
   if (my $cap = $$self{captureBody}) {
     $whatsit->setBody(@post, $stomach->digestNextBody((ref $cap ? $cap : undef))); @post = (); }
 
   my @postpost = $self->executeAfterDigestBody($stomach, $whatsit);
-  LaTeXML::Core::Definition::stopProfiling($profiled) if $profiled;
+  LaTeXML::Core::Definition::stopProfiling($profiled, 'digest') if $profiled;
   return (@pre, $whatsit, @post, @postpost); }
 
 # Similar to executeAfterDigest
@@ -155,7 +155,7 @@ C<LaTeXML::Core::Definition::Constructor>  - Control sequence definitions.
 
 This class represents control sequences that contribute arbitrary XML fragments
 to the document tree.  During digestion, a C<LaTeXML::Core::Definition::Constuctor> records the arguments 
-used in the invokation to produce a L<LaTeXML::Core::Whatsit>.  The resulting L<LaTeXML::Core::Whatsit>
+used in the invocation to produce a L<LaTeXML::Core::Whatsit>.  The resulting L<LaTeXML::Core::Whatsit>
 (usually) generates an XML document fragment when absorbed by an instance of L<LaTeXML::Core::Document>.
 Additionally, a C<LaTeXML::Core::Definition::Constructor> may have beforeDigest and afterDigest daemons
 defined which are executed for side effect, or for adding additional boxes to the output.

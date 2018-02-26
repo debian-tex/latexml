@@ -138,6 +138,9 @@ Attributes cover a variety of styling and position shifting properties.</a:docum
     <a:documentation>Attributes for \elementref{glossaryref}.</a:documentation>
     <ref name="Common.attributes"/>
     <ref name="Refable.attributes"/>
+    <ref name="Fontable.attributes"/>
+    <ref name="Colorable.attributes"/>
+    <ref name="Backgroundable.attributes"/>
     <optional>
       <attribute name="key">
         <a:documentation>should be used to identifier used for the glossaryref.</a:documentation>
@@ -159,10 +162,9 @@ Attributes cover a variety of styling and position shifting properties.</a:docum
 postprocessing, if it is empty.
 It consists of the words
   \texttt{type} (standing for the object type, eg. Ch.),
-  \texttt{refnum} and \texttt{title}
-mixed with arbitrary characters. The 
-It can also be \texttt{fulltitle}, which indicates the title 
-with prefix and type if section numbering is enabled.</a:documentation>
+  \texttt{refnum} and \texttt{title} (including type and refnum)
+or \texttt{toctitle} (for the shortform of the title)
+mixed with arbitrary characters.</a:documentation>
       </attribute>
     </optional>
   </define>
@@ -232,16 +234,18 @@ based on data extracted from the document(s).</a:documentation>
     <a:documentation>Attributes for \elementref{ref}.</a:documentation>
     <ref name="Common.attributes"/>
     <ref name="Refable.attributes"/>
+    <ref name="Fontable.attributes"/>
+    <ref name="Colorable.attributes"/>
+    <ref name="Backgroundable.attributes"/>
     <optional>
       <attribute name="show">
         <a:documentation>a pattern encoding how the text content should be filled in during
 postprocessing, if it is empty.
 It consists of the words
   \texttt{type} (standing for the object type, eg. Ch.),
-  \texttt{refnum} and \texttt{title}
-mixed with arbitrary characters. The 
-It can also be \texttt{fulltitle}, which indicates the title 
-with prefix and type if section numbering is enabled.</a:documentation>
+  \texttt{refnum} and \texttt{title} (including type and refnum)
+or \texttt{toctitle} (for the shortform of the title)
+mixed with arbitrary characters.</a:documentation>
       </attribute>
     </optional>
     <optional>

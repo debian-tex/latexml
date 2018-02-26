@@ -10,31 +10,31 @@
   <section refnum="1" xml:id="S1">
     <title><tag close=" ">1</tag>Input encoding cp1250</title>
     <para xml:id="S1.p1">
-      <tabular vattach="middle">
+      <tabular class="ltx_guessed_headers" vattach="middle">
         <thead>
           <tr>
-            <td border="r" thead="true"/>
-            <td align="center" thead="true">0</td>
-            <td align="center" thead="true">1</td>
-            <td align="center" thead="true">2</td>
-            <td align="center" thead="true">3</td>
-            <td align="center" thead="true">4</td>
-            <td align="center" thead="true">5</td>
-            <td align="center" thead="true">6</td>
-            <td align="center" thead="true">7</td>
-            <td align="center" thead="true">8</td>
-            <td align="center" thead="true">9</td>
-            <td align="center" thead="true">A</td>
-            <td align="center" thead="true">B</td>
-            <td align="center" thead="true">C</td>
-            <td align="center" thead="true">D</td>
-            <td align="center" thead="true">E</td>
-            <td align="center" thead="true">F</td>
+            <td border="r" thead="column row"/>
+            <td align="center" thead="column">0</td>
+            <td align="center" thead="column">1</td>
+            <td align="center" thead="column">2</td>
+            <td align="center" thead="column">3</td>
+            <td align="center" thead="column">4</td>
+            <td align="center" thead="column">5</td>
+            <td align="center" thead="column">6</td>
+            <td align="center" thead="column">7</td>
+            <td align="center" thead="column">8</td>
+            <td align="center" thead="column">9</td>
+            <td align="center" thead="column">A</td>
+            <td align="center" thead="column">B</td>
+            <td align="center" thead="column">C</td>
+            <td align="center" thead="column">D</td>
+            <td align="center" thead="column">E</td>
+            <td align="center" thead="column">F</td>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td align="left" border="r t" thead="true">8x</td>
+            <td align="left" border="r t" thead="row">8x</td>
             <td align="center" border="t">€</td>
             <td border="t"/>
             <td align="center" border="t">‚</td>
@@ -53,7 +53,7 @@
             <td align="center" border="t">Ź</td>
           </tr>
           <tr>
-            <td align="left" border="r" thead="true">9x</td>
+            <td align="left" border="r" thead="row">9x</td>
             <td/>
             <td align="center">‘</td>
             <td align="center">’</td>
@@ -72,7 +72,7 @@
             <td align="center">ź</td>
           </tr>
           <tr>
-            <td align="left" border="r" thead="true">Ax</td>
+            <td align="left" border="r" thead="row">Ax</td>
             <td/>
             <td align="center">ˇ</td>
             <td align="center">˘</td>
@@ -85,37 +85,31 @@
             <td align="center">©</td>
             <td align="center">Ş</td>
             <td align="center">«</td>
-            <td align="center">
-              <Math mode="inline" xml:id="S1.p1.m1" tex="\lnot" text="not">
+            <td align="center"><Math mode="inline" tex="\lnot" text="not" xml:id="S1.p1.m1">
                 <XMath>
                   <XMTok meaning="not" name="lnot" role="FUNCTION">¬</XMTok>
                 </XMath>
-              </Math>
-            </td>
+              </Math></td>
             <td/>
             <td align="center">®</td>
             <td align="center">Ż</td>
           </tr>
           <tr>
-            <td align="left" border="r" thead="true">Bx</td>
+            <td align="left" border="r" thead="row">Bx</td>
             <td align="center">°</td>
-            <td align="center">
-              <Math mode="inline" xml:id="S1.p1.m2" tex="\pm" text="plus-or-minus">
+            <td align="center"><Math mode="inline" tex="\pm" text="plus-or-minus" xml:id="S1.p1.m2">
                 <XMath>
                   <XMTok meaning="plus-or-minus" name="pm" role="ADDOP">±</XMTok>
                 </XMath>
-              </Math>
-            </td>
+              </Math></td>
             <td align="center">˛</td>
             <td align="center">ł</td>
             <td align="center">´</td>
-            <td align="center">
-              <Math mode="inline" xml:id="S1.p1.m3" tex="\mu" text="mu">
+            <td align="center"><Math mode="inline" tex="\mu" text="mu" xml:id="S1.p1.m3">
                 <XMath>
-                  <XMTok name="mu" role="UNKNOWN" font="italic">μ</XMTok>
+                  <XMTok font="italic" name="mu" role="UNKNOWN">μ</XMTok>
                 </XMath>
-              </Math>
-            </td>
+              </Math></td>
             <td align="center">¶</td>
             <td align="center">·</td>
             <td align="center">¸</td>
@@ -128,7 +122,7 @@
             <td align="center">ż</td>
           </tr>
           <tr>
-            <td align="left" border="r" thead="true">Cx</td>
+            <td align="left" border="r" thead="row">Cx</td>
             <td align="center">Ŕ</td>
             <td align="center">Á</td>
             <td align="center">Â</td>
@@ -147,7 +141,7 @@
             <td align="center">Ď</td>
           </tr>
           <tr>
-            <td align="left" border="r" thead="true">Dx</td>
+            <td align="left" border="r" thead="row">Dx</td>
             <td align="center">Đ</td>
             <td align="center">Ń</td>
             <td align="center">Ň</td>
@@ -155,13 +149,11 @@
             <td align="center">Ô</td>
             <td align="center">Ő</td>
             <td align="center">Ö</td>
-            <td align="center">
-              <Math mode="inline" xml:id="S1.p1.m4" tex="\times" text="*">
+            <td align="center"><Math mode="inline" tex="\times" text="*" xml:id="S1.p1.m4">
                 <XMath>
                   <XMTok meaning="times" role="MULOP">×</XMTok>
                 </XMath>
-              </Math>
-            </td>
+              </Math></td>
             <td align="center">Ř</td>
             <td align="center">Ů</td>
             <td align="center">Ú</td>
@@ -172,7 +164,7 @@
             <td align="center">ß</td>
           </tr>
           <tr>
-            <td align="left" border="r" thead="true">Ex</td>
+            <td align="left" border="r" thead="row">Ex</td>
             <td align="center">ŕ</td>
             <td align="center">á</td>
             <td align="center">â</td>
@@ -191,7 +183,7 @@
             <td align="center">ď</td>
           </tr>
           <tr>
-            <td align="left" border="r" thead="true">Fx</td>
+            <td align="left" border="r" thead="row">Fx</td>
             <td align="center">đ</td>
             <td align="center">ń</td>
             <td align="center">ň</td>
@@ -199,13 +191,11 @@
             <td align="center">ô</td>
             <td align="center">ő</td>
             <td align="center">ö</td>
-            <td align="center">
-              <Math mode="inline" xml:id="S1.p1.m5" tex="\div" text="/">
+            <td align="center"><Math mode="inline" tex="\div" text="/" xml:id="S1.p1.m5">
                 <XMath>
                   <XMTok meaning="divide" name="div" role="MULOP">÷</XMTok>
                 </XMath>
-              </Math>
-            </td>
+              </Math></td>
             <td align="center">ř</td>
             <td align="center">ů</td>
             <td align="center">ú</td>

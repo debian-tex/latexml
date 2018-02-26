@@ -132,8 +132,22 @@
       <!-- generally, align & width should be covered by CSS -->
       <xsl:call-template name="add_attributes">
         <xsl:with-param name="extra_classes">
+          <xsl:if test="@thead">
+            <xsl:value-of select="concat('ltx_th ',f:class-pref('ltx_th_',@thead))"/>
+          </xsl:if>
+          <xsl:if test="@thead and @border">
+            <xsl:text> </xsl:text>
+          </xsl:if>
           <xsl:if test="@border">
             <xsl:value-of select="f:class-pref('ltx_border_',@border)"/>
+          </xsl:if>
+          <!-- attempt to simulate rowspan when simulating table.
+               Actually, I think we need empty <td> for the spanned cells! -->
+          <xsl:if test="@rowspan and $context = 'inline'">
+            <xsl:if test="@thead or @border">
+              <xsl:text> </xsl:text>
+            </xsl:if>
+            <xsl:text>ltx_rowspan</xsl:text>
           </xsl:if>
         </xsl:with-param>
         <xsl:with-param name="extra_style">
@@ -142,6 +156,20 @@
             <xsl:value-of select="substring-after(@align,'char:')"/>
             <xsl:text>";</xsl:text>
           </xsl:if>
+          <xsl:choose>
+            <xsl:when test="ancestor::ltx:tabular[@rowsep and @colsep]">
+              <xsl:value-of select="concat('padding:',f:half(ancestor::ltx:tabular/@rowsep),' ',
+                                    ancestor::ltx:tabular/@colsep,';')"/>
+            </xsl:when>
+            <xsl:when test="ancestor::ltx:tabular/@rowsep">
+              <xsl:value-of select="concat('padding-top:',f:half(ancestor::ltx:tabular/@rowsep),';')"/>
+              <xsl:value-of select="concat('padding-bottom:',f:half(ancestor::ltx:tabular/@rowsep),';')"/>
+            </xsl:when>
+            <xsl:when test="ancestor::ltx:tabular/@colsep">
+              <xsl:value-of select="concat('padding-left:',ancestor::ltx:tabular/@colsep,';')"/>
+              <xsl:value-of select="concat('padding-right:',ancestor::ltx:tabular/@colsep,';')"/>
+            </xsl:when>
+          </xsl:choose>
         </xsl:with-param>
       </xsl:call-template>
       <xsl:if test="@colspan">
