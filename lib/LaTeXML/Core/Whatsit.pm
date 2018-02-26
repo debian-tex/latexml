@@ -203,11 +203,12 @@ sub beAbsorbed {
   # Hopefully the csname is the same that was charged in the digestioned phase!
   my $defn = $self->getDefinition;
   my $profiled = $STATE->lookupValue('PROFILING') && $defn->getCS;
-  LaTeXML::Core::Definition::startProfiling($profiled) if $profiled;
+  LaTeXML::Core::Definition::startProfiling($profiled, 'absorb') if $profiled;
   my @result = $defn->doAbsorbtion($document, $self);
-  LaTeXML::Core::Definition::stopProfiling($profiled) if $profiled;
+  LaTeXML::Core::Definition::stopProfiling($profiled, 'absorb') if $profiled;
   return @result; }
 
+# See discussion in Box.pm
 sub computeSize {
   my ($self, %options) = @_;
   # Use #body, if any, else ALL args !?!?!
@@ -241,9 +242,9 @@ sub computeSize {
     $options{layout}  = $$props{layout}  if $$props{layout};
     ($width, $height, $depth) = $font->computeBoxesSize([@boxes], %options); }
   # Now, only set the dimensions that weren't already set.
-  $$props{width}  = $width  unless defined $$props{width};
-  $$props{height} = $height unless defined $$props{height};
-  $$props{depth}  = $depth  unless defined $$props{depth};
+  $$props{cwidth}  = $width  unless defined $$props{width};
+  $$props{cheight} = $height unless defined $$props{height};
+  $$props{cdepth}  = $depth  unless defined $$props{depth};
   return; }
 
 #======================================================================

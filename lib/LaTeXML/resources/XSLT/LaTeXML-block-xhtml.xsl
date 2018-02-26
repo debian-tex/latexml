@@ -24,7 +24,7 @@
   <!-- ======================================================================
        Various Block-level elements:
        ltx:p, ltx:equation, ltx:equationgroup, ltx:quote, ltx:block,
-       ltx:listingblock, ltx:itemize, ltx:enumerate, ltx:description
+       ltx:listing, ltx:itemize, ltx:enumerate, ltx:description
        ====================================================================== -->
 
   <!-- Most of these templates generate block-level elements but may appear
@@ -93,9 +93,9 @@
     </xsl:element>
   </xsl:template>
 
-  <xsl:strip-space elements="ltx:listingblock"/>
+  <xsl:strip-space elements="ltx:listing"/>
 
-  <xsl:template match="ltx:listingblock">
+  <xsl:template match="ltx:listing">
     <xsl:param name="context"/>
     <xsl:text>&#x0A;</xsl:text>
     <xsl:element name="{f:blockelement($context,'div')}" namespace="{$html_ns}">
@@ -115,26 +115,45 @@
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="ltx:listingblock" mode="classes">
+  <xsl:template match="ltx:listing" mode="classes">
     <xsl:param name="context"/>
     <xsl:apply-imports/>
     <xsl:text> ltx_listing</xsl:text>
   </xsl:template>
 
-  <xsl:template match="ltx:listingblock[@data]" mode="begin">
+  <xsl:template match="ltx:listing[@data]" mode="begin">
     <xsl:param name="context"/>
     <xsl:element name="{f:blockelement($context,'div')}" namespace="{$html_ns}">
       <xsl:attribute name="class">ltx_listing_data</xsl:attribute>
       <xsl:element name="a" namespace="{$html_ns}">
-        <xsl:attribute name="href">
-<!--          <xsl:value-of select="concat('data:text/plain;base64,',@data)"/>-->
-          <xsl:value-of select="concat('data:text/plain,',@data)"/>
-        </xsl:attribute>
+        <xsl:call-template name="add_data_attribute">
+          <xsl:with-param name="name" select="'href'"/>
+        </xsl:call-template>
         <xsl:text>&#x2B07;</xsl:text>
       </xsl:element>
     </xsl:element>
   </xsl:template>
 
+
+  <xsl:template match="ltx:listingline">
+    <xsl:param name="context"/>
+    <xsl:text>&#x0A;</xsl:text>
+    <xsl:element name="{f:blockelement($context,'div')}" namespace="{$html_ns}">
+      <xsl:call-template name="add_id"/>
+      <xsl:call-template name="add_attributes"/>
+      <xsl:apply-templates select="." mode="begin">
+        <xsl:with-param name="context" select="$context"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates>
+        <xsl:with-param name="context" select="$context"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates select="." mode="end">
+        <xsl:with-param name="context" select="$context"/>
+      </xsl:apply-templates>
+      <xsl:text>&#x0A;</xsl:text>
+    </xsl:element>
+
+  </xsl:template>
   <!-- ======================================================================
        Equation structures
        ====================================================================== -->
@@ -184,7 +203,9 @@
 <!--    <xsl:text>(</xsl:text>-->
     <xsl:element name="span" namespace="{$html_ns}">
       <xsl:variable name="innercontext" select="'inline'"/><!-- override -->
-      <xsl:attribute name="class">ltx_tag ltx_tag_<xsl:value-of select="local-name(..)"/></xsl:attribute>
+      <xsl:attribute name="class">ltx_tag ltx_tag_<xsl:value-of select="local-name(..)"/>
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="f:if(ancestor-or-self::*[contains(@class,'ltx_leqno')],'ltx_align_left','ltx_align_right')"/></xsl:attribute>
       <xsl:choose>
         <xsl:when test="../ltx:tag">
           <xsl:apply-templates select="../ltx:tag">    
@@ -251,9 +272,11 @@
     <xsl:param name="eqnopos"
                select="f:if(ancestor-or-self::*[contains(@class,'ltx_leqno')],'left','right')"/>
     <xsl:text>&#x0A;</xsl:text>
-    <xsl:element name="div" namespace="{$html_ns}">
+    <xsl:element name="{f:blockelement($context,'div')}" namespace="{$html_ns}">
       <xsl:call-template name="add_id"/>
-      <xsl:call-template name="add_attributes"/>
+      <xsl:call-template name="add_attributes">
+        <xsl:with-param name="extra_classes" select="'ltx_eqn_div'"/>
+      </xsl:call-template>
       <xsl:apply-templates select="." mode="begin">
         <xsl:with-param name="context" select="$context"/>
       </xsl:apply-templates>
@@ -291,9 +314,11 @@
     <xsl:param name="eqnopos"
                select="f:if(ancestor-or-self::*[contains(@class,'ltx_leqno')],'left','right')"/>
     <xsl:text>&#x0A;</xsl:text>
-    <xsl:element name="div" namespace="{$html_ns}">
+    <xsl:element name="{f:blockelement($context,'div')}" namespace="{$html_ns}">
       <xsl:call-template name="add_id"/>
-      <xsl:call-template name="add_attributes"/>
+      <xsl:call-template name="add_attributes">
+        <xsl:with-param name="extra_classes" select="'ltx_eqn_div'"/>
+      </xsl:call-template>
       <xsl:apply-templates select="." mode="begin">
         <xsl:with-param name="context" select="$context"/>
       </xsl:apply-templates>
@@ -426,9 +451,11 @@
     <xsl:param name="ncolumns" 
                select="f:maxcolumns(ltx:equation | ltx:equationgroup/ltx:equation)"/>
     <xsl:text>&#x0A;</xsl:text>
-    <xsl:element name="table" namespace="{$html_ns}">
+    <xsl:element name="{f:blockelement($context,'table')}" namespace="{$html_ns}">
       <xsl:call-template name="add_id"/>
-      <xsl:call-template name="add_attributes"/>
+      <xsl:call-template name="add_attributes">
+        <xsl:with-param name="extra_classes" select="'ltx_eqn_table'"/>
+      </xsl:call-template>
       <xsl:text>&#x0A;</xsl:text>
       <xsl:apply-templates select="." mode="begin">
         <xsl:with-param name="context" select="$context"/>
@@ -460,9 +487,11 @@
     <xsl:param name="context"/>
     <xsl:param name="ncolumns" select="f:countcolumns(.)"/>
     <xsl:text>&#x0A;</xsl:text>
-    <xsl:element name="table" namespace="{$html_ns}">
+    <xsl:element name="{f:blockelement($context,'table')}" namespace="{$html_ns}">
       <xsl:call-template name="add_id"/>
-      <xsl:call-template name="add_attributes"/>
+      <xsl:call-template name="add_attributes">
+        <xsl:with-param name="extra_classes" select="'ltx_eqn_table'"/>
+      </xsl:call-template>
       <xsl:apply-templates select="." mode="begin">
         <xsl:with-param name="context" select="$context"/>
       </xsl:apply-templates>
@@ -519,10 +548,10 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
 | ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equation/ltx:constraint
                                 )"/>
           <xsl:text>&#x0A;</xsl:text>
-          <xsl:element name="td" namespace="{$html_ns}">
+          <xsl:element name="{f:blockelement($context,'td')}" namespace="{$html_ns}">
             <xsl:attribute name="rowspan"><xsl:value-of select="$nrows"/></xsl:attribute>
             <xsl:attribute name="class">
-              <xsl:value-of select="concat('ltx_align_middle ltx_align_',$side)"/>
+              <xsl:value-of select="concat('ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_',$side)"/>
             </xsl:attribute>
             <xsl:apply-templates
                 select="ancestor-or-self::ltx:equationgroup[position()=1]/@refnum">
@@ -548,10 +577,10 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
                                 | ancestor-or-self::ltx:equation[position()=1][@refnum]/ltx:constraint
                                 )"/>
           <xsl:text>&#x0A;</xsl:text>
-          <xsl:element name="td" namespace="{$html_ns}">
+          <xsl:element name="{f:blockelement($context,'td')}" namespace="{$html_ns}">
             <xsl:attribute name="rowspan"><xsl:value-of select="$nrows"/></xsl:attribute>
             <xsl:attribute name="class">
-              <xsl:value-of select="concat('ltx_eqn_eqno ltx_align_middle ltx_align_',$side)"/>
+              <xsl:value-of select="concat('ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_',$side)"/>
             </xsl:attribute>
             <xsl:apply-templates select="ancestor-or-self::ltx:equation[position()=1]/@refnum">
               <xsl:with-param name="context" select="$context"/>
@@ -571,9 +600,9 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
       <xsl:with-param name='side' select="'left'"/>
     </xsl:call-template>
     <xsl:text>&#x0A;</xsl:text>
-    <xsl:element name="td" namespace="{$html_ns}">
+    <xsl:element name="{f:blockelement($context,'td')}" namespace="{$html_ns}">
       <xsl:attribute name="class">
-      <xsl:value-of select="concat('ltx_eqn_',$eqpos,'_padleft')"/></xsl:attribute>
+      <xsl:value-of select="concat('ltx_eqn_cell ltx_eqn_',$eqpos,'_padleft')"/></xsl:attribute>
     </xsl:element>
   </xsl:template>
 
@@ -582,9 +611,9 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
     <xsl:param name="eqpos"
                select="f:if(ancestor-or-self::*[contains(@class,'ltx_fleqn')],'left','center')"/>
     <xsl:text>&#x0A;</xsl:text>
-    <xsl:element name="td" namespace="{$html_ns}">
+    <xsl:element name="{f:blockelement($context,'td')}" namespace="{$html_ns}">
       <xsl:attribute name="class">
-      <xsl:value-of select="concat('ltx_eqn_',$eqpos,'_padright')"/></xsl:attribute>
+      <xsl:value-of select="concat('ltx_eqn_cell ltx_eqn_',$eqpos,'_padright')"/></xsl:attribute>
     </xsl:element>
     <xsl:call-template name="eqnumtd">
       <xsl:with-param name="context" select="$context"/>
@@ -611,10 +640,10 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
     <xsl:param name="eqpos"
                select="f:if(ancestor-or-self::*[contains(@class,'ltx_fleqn')],'left','center')"/>
     <xsl:text>&#x0A;</xsl:text>
-    <xsl:element name="tr" namespace="{$html_ns}">
-      <xsl:attribute name="class">ltx_align_baseline</xsl:attribute>
-      <xsl:element name="td" namespace="{$html_ns}">
-        <xsl:attribute name="class">ltx_align_left</xsl:attribute>
+    <xsl:element name="{f:blockelement($context,'tr')}" namespace="{$html_ns}">
+      <xsl:attribute name="class">ltx_eqn_row ltx_align_baseline</xsl:attribute>
+      <xsl:element name="{f:blockelement($context,'td')}" namespace="{$html_ns}">
+        <xsl:attribute name="class">ltx_eqn_cell ltx_align_left</xsl:attribute>
         <xsl:attribute name="style">white-space:normal;</xsl:attribute>
         <xsl:attribute name="colspan">
           <xsl:value-of select="3+$ncolumns"/>
@@ -658,7 +687,7 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
       </xsl:when>
       <!-- Nested, but only 1 deep; introduce a tbody-->
       <xsl:when test="not(parent::ltx:equationgroup[ancestor::ltx:equationgroup])">
-        <xsl:element name="tbody" namespace="{$html_ns}">
+        <xsl:element name="{f:blockelement($context,'tbody')}" namespace="{$html_ns}">
           <xsl:call-template name="add_id"/>
           <xsl:apply-templates select="." mode="ininalignment">
             <xsl:with-param name="ncolumns" select="$ncolumns"/>
@@ -668,9 +697,14 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
       </xsl:when>
       <!-- Sloppy case, we at least need an empty row to put the id on; Ugh -->
       <xsl:otherwise>
-        <xsl:element name="tr" namespace="{$html_ns}">
+        <xsl:element name="{f:blockelement($context,'tr')}" namespace="{$html_ns}">
           <xsl:call-template name="add_id"/>
-          <xsl:element name="td" namespace="{$html_ns}"/> <!--Empty, too-->
+          <xsl:attribute name="class">ltx_eqn_row</xsl:attribute>
+
+          <xsl:element name="{f:blockelement($context,'td')}" namespace="{$html_ns}"> <!--Empty, too
+-->
+            <xsl:attribute name="class">ltx_eqn_cell</xsl:attribute>
+          </xsl:element>
         </xsl:element>
         <xsl:apply-templates select="." mode="ininalignment">
           <xsl:with-param name="ncolumns" select="$ncolumns"/>
@@ -711,13 +745,13 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
     <xsl:choose>
       <!-- Case 1: (possibly) Multi-line equation -->
       <xsl:when test="ltx:MathFork/ltx:MathBranch[1]/ltx:tr">
-        <xsl:element name="tr" namespace="{$html_ns}">
+        <xsl:element name="{f:blockelement($context,'tr')}" namespace="{$html_ns}">
           <!-- Note that the id is only going on the 1st row! -->
           <xsl:if test="parent::ltx:equationgroup"> <!--Don't duplicate id! -->
             <xsl:call-template name="add_id"/>
           </xsl:if>
           <xsl:call-template name="add_attributes">
-            <xsl:with-param name="extra_classes" select="'ltx_align_baseline'"/>
+            <xsl:with-param name="extra_classes" select="'ltx_eqn_row ltx_align_baseline'"/>
           </xsl:call-template>
           <xsl:apply-templates select="." mode="inalignment-begin">
             <xsl:with-param name="ncolumns" select="$ncolumns"/>
@@ -736,8 +770,8 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
         </xsl:element>
         <xsl:for-each select="ltx:MathFork/ltx:MathBranch[1]/ltx:tr[position() &gt; 1]">
           <xsl:text>&#x0A;</xsl:text>
-          <xsl:element name="tr" namespace="{$html_ns}">
-            <xsl:attribute name="class">ltx_align_baseline</xsl:attribute>
+          <xsl:element name="{f:blockelement($context,'tr')}" namespace="{$html_ns}">
+            <xsl:attribute name="class">ltx_eqn_row ltx_align_baseline</xsl:attribute>
             <xsl:call-template name="eq-left">
               <xsl:with-param name="context" select="$context"/>
             </xsl:call-template>
@@ -752,12 +786,12 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
       </xsl:when>
       <!-- Case 2: Single line, (possibly) multiple columns -->
       <xsl:when test="ltx:MathFork/ltx:MathBranch[1]">
-        <xsl:element name="tr" namespace="{$html_ns}">
+        <xsl:element name="{f:blockelement($context,'tr')}" namespace="{$html_ns}">
           <xsl:if test="parent::ltx:equationgroup"> <!--Don't duplicate id! -->
             <xsl:call-template name="add_id"/>
           </xsl:if>
           <xsl:call-template name="add_attributes">
-            <xsl:with-param name="extra_classes" select="'ltx_align_baseline'"/>
+            <xsl:with-param name="extra_classes" select="'ltx_eqn_row ltx_align_baseline'"/>
           </xsl:call-template>
           <xsl:apply-templates select="." mode="inalignment-begin">
             <xsl:with-param name="ncolumns" select="$ncolumns"/>
@@ -777,12 +811,12 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
       </xsl:when>
       <!-- Case : default; just an unaligned equation, presumably within a group-->
       <xsl:otherwise>
-        <xsl:element name="tr" namespace="{$html_ns}">
+        <xsl:element name="{f:blockelement($context,'tr')}" namespace="{$html_ns}">
           <xsl:if test="parent::ltx:equationgroup"> <!--Don't duplicate id! -->
             <xsl:call-template name="add_id"/>
           </xsl:if>
           <xsl:call-template name="add_attributes">
-            <xsl:with-param name="extra_classes" select="'ltx_align_baseline'"/>
+            <xsl:with-param name="extra_classes" select="'ltx_eqn_row ltx_align_baseline'"/>
           </xsl:call-template>
           <xsl:apply-templates select="." mode="inalignment-begin">
             <xsl:with-param name="ncolumns" select="$ncolumns"/>
@@ -792,9 +826,9 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
             <xsl:with-param name="context" select="$context"/>
           </xsl:call-template>
           <xsl:text>&#x0A;</xsl:text>
-          <xsl:element name="td" namespace="{$html_ns}">
+          <xsl:element name="{f:blockelement($context,'td')}" namespace="{$html_ns}">
             <xsl:attribute name="class">
-              <xsl:value-of select="concat('ltx_align_',$eqpos)"/>
+              <xsl:value-of select="concat('ltx_eqn_cell ltx_align_',$eqpos)"/>
             </xsl:attribute>
             <xsl:if test="$ncolumns > 1">
               <xsl:attribute name="colspan"><xsl:value-of select="$ncolumns"/></xsl:attribute>
@@ -832,9 +866,10 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
                select="f:if(ancestor-or-self::*[contains(@class,'ltx_fleqn')],'left','center')"/>
     <xsl:if test="ltx:constraint[not(@hidden='true')]">
       <xsl:text>&#x0A;</xsl:text>
-      <xsl:element name="tr" namespace="{$html_ns}">
-        <xsl:element name="td" namespace="{$html_ns}">
-          <xsl:attribute name="class">ltx_align_right</xsl:attribute>
+      <xsl:element name="{f:blockelement($context,'tr')}" namespace="{$html_ns}">
+          <xsl:attribute name="class">ltx_eqn_row</xsl:attribute>
+        <xsl:element name="{f:blockelement($context,'td')}" namespace="{$html_ns}">
+          <xsl:attribute name="class">ltx_eqn_cell ltx_align_right</xsl:attribute>
           <!-- the $ncolumns of math, plus whatever endpadding, but NOT the number-->
           <xsl:attribute name="colspan">
             <xsl:value-of select="$ncolumns+2"/>
@@ -863,11 +898,19 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
   <xsl:template match="ltx:td" mode="inalignment">
     <xsl:param name="context"/>
     <xsl:text>&#x0A;</xsl:text>
-    <xsl:element name="td" namespace="{$html_ns}">
+    <xsl:element name="{f:blockelement($context,'td')}" namespace="{$html_ns}">
       <xsl:if test="@colspan">
         <xsl:attribute name="colspan"><xsl:value-of select="@colspan"/></xsl:attribute>
       </xsl:if>
-      <xsl:call-template name="add_attributes"/>
+      <xsl:call-template name="add_attributes">
+        <xsl:with-param name="extra_classes" select="'ltx_eqn_cell'"/>
+	<xsl:with-param name="extra_style">
+          <xsl:if test="ancestor::ltx:equationgroup/@rowsep">
+              <xsl:value-of select="concat('padding-top:',f:half(ancestor::ltx:equationgroup/@rowsep),';')"/>
+              <xsl:value-of select="concat('padding-bottom:',f:half(ancestor::ltx:equationgroup/@rowsep),';')"/>
+            </xsl:if>
+	  </xsl:with-param>
+      </xsl:call-template>
       <xsl:apply-templates>
         <xsl:with-param name="context" select="$context"/>
       </xsl:apply-templates>
@@ -886,9 +929,9 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
   <xsl:template match="ltx:Math" mode="inalignment">
     <xsl:param name="context"/>
     <xsl:text>&#x0A;</xsl:text>
-    <xsl:element name="td" namespace="{$html_ns}">
+    <xsl:element name="{f:blockelement($context,'td')}" namespace="{$html_ns}">
       <xsl:call-template name="add_attributes">
-        <xsl:with-param name="extra_classes" select="'ltx_align_center'"/>
+        <xsl:with-param name="extra_classes" select="'ltx_eqn_cell ltx_align_center'"/>
       </xsl:call-template>
       <xsl:apply-templates select=".">
         <xsl:with-param name="context" select="$context"/>
@@ -975,7 +1018,12 @@ ancestor-or-self::ltx:equationgroup[position()=1][@refnum]/descendant::ltx:equat
         <xsl:element name="{f:blockelement($context,'li')}" namespace="{$html_ns}">
           <xsl:call-template name="add_id"/>
           <xsl:call-template name="add_attributes">
-            <xsl:with-param name="extra_style" select="'list-style-type:none;'"/>
+            <xsl:with-param name="extra_style">
+              <xsl:value-of select="'list-style-type:none;'"/>
+              <xsl:if test="@itemsep">
+                <xsl:value-of select="concat('padding-top:',@itemsep,';')"/>
+              </xsl:if>
+            </xsl:with-param>
           </xsl:call-template>
           <xsl:apply-templates select="." mode="begin">
             <xsl:with-param name="context" select="$context"/>

@@ -1,74 +1,153 @@
+# -*- coding: utf-8; mode: tcl; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4; truncate-lines: t -*- vim:fenc=utf-8:et:sw=4:ts=4:sts=4
 # $Id$
 #======================================================================
 # Portfile for LaTeXML
-# (draft)
 #======================================================================
-PortSystem 1.0
-name LaTeXML
-version 0.8.0
-categories tex
-maintainers bruce.miller@nist.gov
-description LaTeXML converts TeX to XML/HTML/MathML
-long_description \
-   LaTeXML converts TeX to XML,\
-   including HTML, XHTML, ePub with MathML.
+PortSystem          1.0
+PortGroup           texlive 1.0
 
-homepage http://dlmf.nist.gov/LaTeXML/
-platforms darwin
-master_sites http://dlmf.nist.gov/LaTeXML/releases/
-checksums rmd160 cfafc6f4f5e276543333f907a1ec0db3c25e424f \
-          sha256 a495019f2828f0734e9e41f0398f6c8d60ba6a934d4ccad4fea7d588ab060388
+name                LaTeXML
+version             0.8.2
+revision            1
+license             public-domain
+maintainers         nist.gov:bruce.miller
+description         LaTeXML converts TeX to XML/HTML/MathML
+long_description \
+   LaTeXML converts TeX to XML, including HTML, XHTML, ePub with MathML.
+
+# Written in Perl, but it is an application, not just modules
+PortGroup           perl5 1.0
+perl5.branches      5.22
+perl5.setup         ${name} ${version}
+perl5.link_binaries_suffix
+
+categories          tex
+homepage            http://dlmf.nist.gov/LaTeXML/
+
+platforms           darwin
+supported_archs     noarch
+
+master_sites        ${homepage}/releases/
+checksums           rmd160 6dbf960277cdcf30605ce93335e3383673c1ff66 \
+                    sha256 3d41a3012760d31d721b569d8c1b430cde1df2b68fcc3c66f41ec640965caabf
 # Use:
-# openssl rmd160 LaTeXML-0.8.0.tar.gz
-# openssl sha256 LaTeXML-0.8.0.tar.gz
+# openssl rmd160 LaTeXML-0.8.2.tar.gz
+# openssl sha256 LaTeXML-0.8.2.tar.gz
+
 #============================================================
 # Dependencies
-depends_lib p5.16-archive-zip \
-  p5.16-file-which \
-  p5.16-getopt-long \
-  p5.16-image-size \
-  p5.16-io-string \
-  p5.16-json-xs \
-  p5.16-libwww-perl \
-  p5.16-parse-recdescent \
-  p5.16-time-hires \
-  p5.16-uri \
-  p5.16-xml-libxml \
-  p5.16-xml-libxslt \
-  p5.16-perlmagick
+depends_lib-append \
+        port:p${perl5.major}-archive-zip \
+        port:p${perl5.major}-file-which \
+        port:p${perl5.major}-getopt-long \
+        port:p${perl5.major}-image-size \
+        port:p${perl5.major}-io-string \
+        port:p${perl5.major}-json-xs \
+        port:p${perl5.major}-libwww-perl \
+        port:p${perl5.major}-parse-recdescent \
+        port:p${perl5.major}-time-hires \
+        port:p${perl5.major}-uri \
+        port:p${perl5.major}-xml-libxml \
+        port:p${perl5.major}-xml-libxslt \
+        port:p${perl5.major}-perlmagick
 
-# That last seems to be the way to depend on TeX
-# being installed, without necessarily requiring
-# _specifically_ texlive (eg MacTeX or something
-# else perhaps can work, if /usr/texbin is in
-# binpath in macports.conf)
-#
-# Also requires: DB_File, Pod::Parser and Test::More
-# but those should be in Perl's core modules.
+# Also requires: DB_File, Pod::Parser, Test::More & version
+# but those should be in any non-obsolete Perl's core modules.
+
 #============================================================
 # LaTeXML works MUCH better if there is a TeX installed.
-# It (hopefully) will find any installation if it can find kpsewhich
-# However, we don't require a dependency here since
-# users may prefer MacTeX, or MacPort's texlive or ....
-#  bin:texhash:texlive
-notes "${name} works best with some version of TeX installed. \
-   Please install MacTeX or 'sudo port install texlive' (or other system) first."
+# - it uses some latex style files from texlive within bindings
+# - it can install its own style files for use within tex/latex
+# We could simply depend on texlive, but some folks prefer MacTeX
+# and object to 2nd multi-GB download!  So we define variants.
+options latexml.found_tex
+default latexml.found_tex no
+
+# No texmf install via Makefile.
+pre-configure {
+   configure.args-append   TEXMF=
+  }
+# We don't want dependencies on texlive, but want to cooperate.
+# We'll install style files where texlive expects or will expect.
+post-destroot {
+    xinstall -d ${texlive_texmfdist}/tex/latex/latexml
+    foreach sty [glob ${worksrcpath}/lib/LaTeXML/texmf/*.sty] {
+        file copy -force ${sty} ${texlive_texmfdist}/tex/latex/latexml/
+    }
+}
+# invoke mktexlsr IFF texlive already installed;
+# otherwise texlive will do it if it's ever installed.
+post-activate {
+    if [file executable ${prefix}/bin/mktexlsr] {
+        latexml.found_tex yes
+        ${texlive.mktexlsr}
+    }
+}
+# Remove style files
+post-uninstall {
+    foreach sty [glob -nocomplain ${texlive_texmfdist}/tex/latex/latexml/*.sty] {
+        delete ${sty}
+    }
+    if [file executable ${prefix}/bin/mktexlsr] {
+        ${texlive.mktexlsr}
+    }
+}
+
+# The mactex variant expects MacTeX to be installed
+# and installs latexml's stylefiles to MacTeX's texmf (local)
+options latexml.mactex_bin
+options latexml.mactex_texmf
+default latexml.mactex_bin ""
+default latexml.mactex_texmf ""
+set latexml.mactex_candidates { \
+   "/Library/TeX/texbin" \
+   "/usr/texbin" \
+}
+variant mactex description {Build with MacTeX support} {
+    # First, check if MacTeX actually seems to be there...
+    foreach dir ${latexml.mactex_candidates} {
+        if [file executable "${dir}/kpsewhich"] {
+            latexml.mactex_bin ${dir}
+            break
+        }
+    }
+    if { ${latexml.mactex_bin} != "" } {
+        latexml.mactex_texmf \
+            [exec ${latexml.mactex_bin}/kpsewhich --expand-var='\$TEXMFLOCAL']
+        regsub -all {'} ${latexml.mactex_texmf} "" latexml.mactex_texmf
+        latexml.found_tex yes
+    } else {
+        return -code error "Cannot find MacTeX installation; aborting"
+    }
+
+    post-destroot {
+        xinstall -d ${latexml.mactex_texmf}/tex/latex/latexml
+        foreach sty [glob ${worksrcpath}/lib/LaTeXML/texmf/*.sty] {
+            file copy -force ${sty} ${latexml.mactex_texmf}/tex/latex/latexml/
+        }
+    }
+    post-activate {
+        system "${latexml.mactex_bin}/mktexlsr"
+    }
+    # Remove style files
+    post-uninstall {
+        foreach sty [glob -nocomplain ${latexml.mactex_texmf}/tex/latex/latexml/*.sty] {
+            delete ${sty}
+        }
+        system "${latexml.mactex_bin}/mktexlsr"
+    }
+    notes "Using MacTeX for TeX: will install styles to MacTeX's texmf-local \
+        ${latexml.mactex_texmf} \
+        (which is outside macport's common directory structure)"
+    # AND, since we're installing files outside macports' normal directories
+    destroot.violate_mtree  yes
+}
+
+post-activate {
+    if {! ${latexml.found_tex}} {
+        ui_msg "${name} works best with some version of TeX installed. \
+    Please consider installing texlive, or PRE-install MacTeX and use +mactex variant."
+    }
+}
 
 #============================================================
-# Configuration
-# Override configure to do it the perl way.
-configure.cmd ${prefix}/bin/perl5.16 Makefile.PL
-
-# Note that installation does
-#   make install DESTDIR=${destroot}
-# which stages the installation to $destroot, NOT the eventual final installation.
-
-#============================================================
-# Do this to enable testing
-# test.run yes
-
-#============================================================
-# Get TeX to notice our style files, since this isn't done
-# when staging the installation to ${destpath}
-post-activate { system "mktexlsr" }
-

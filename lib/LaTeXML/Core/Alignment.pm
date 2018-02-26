@@ -24,7 +24,6 @@ use List::Util qw(max sum);
 use base qw(LaTeXML::Core::Whatsit);
 use base qw(Exporter);
 our @EXPORT = (qw(
-    &constructAlignment
     &ReadAlignmentTemplate &MatrixTemplate));
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -132,6 +131,7 @@ sub addLine {
 
 sub nextColumn {
   my ($self) = @_;
+  return unless $$self{current_row};
   my $colspec = $$self{current_row}->column(++$$self{current_column});
   if (!$colspec) {
     Error('unexpected', '&', $STATE->getStomach->getGullet, "Extra alignment tab '&'");
@@ -149,11 +149,11 @@ sub currentRowNumber {
 
 sub currentColumn {
   my ($self) = @_;
-  return $$self{current_row}->column($$self{current_column}); }
+  return $$self{current_row} && $$self{current_row}->column($$self{current_column}); }
 
 sub getColumn {
   my ($self, $n) = @_;
-  return $$self{current_row}->column($n); }
+  return $$self{current_row} && $$self{current_row}->column($n); }
 
 # Ugh... these take boxes; adding before/after columns takes tokens!
 sub addBeforeRow {
@@ -249,8 +249,8 @@ sub beAbsorbed {
         vattach => $$cell{vattach},
         (($$cell{colspan} || 1) != 1 ? (colspan => $$cell{colspan}) : ()),
         (($$cell{rowspan} || 1) != 1 ? (rowspan => $$cell{rowspan}) : ()),
-        ($border      ? (border => $border) : ()),
-        ($$cell{head} ? (thead  => 'true')  : ()));
+        ($border ? (border => $border) : ()),
+        ($$cell{thead} ? (thead => join(' ', sort keys %{ $$cell{thead} })) : ()));
       if (!$empty) {
         local $LaTeXML::BOX = $$cell{boxes};
         $document->openElement('ltx:XMArg', rule => 'Anything,') if $ismath;    # Hacky!
@@ -263,116 +263,66 @@ sub beAbsorbed {
     &{ $$self{closeRow} }($document); }
   my $node = &{ $$self{closeContainer} }($document);
 
+  # If we're not nested inside another tabular
+  # [This should be an afterConstruct somewhere?]
   # If requested to guess headers & we're not nested inside another tabular
-  # This should be an afterConstruct somewhere?
-  if ($self->getProperty('guess_headers')
-    && !$document->findnodes("ancestor::ltx:tabular", $node)) {
-    # If no cells are already marked as being thead, apply heuristic
-    if (!$document->findnodes('descendant::ltx:td[contains(@class,"thead")]', $node)) {
+  if (!$document->findnodes("ancestor::ltx:tabular", $node)) {
+##    my $hashead = $document->findnodes('descendant::ltx:td[contains(@class,"thead")]', $node);
+    my $hashead = $document->findnodes('descendant::ltx:td[@thead]', $node);
+    # If requested && no cells are already marked as being thead, apply heuristic
+    if ($self->getProperty('guess_headers') && !$hashead) {
       guess_alignment_headers($document, $node, $self); }
     # Otherwise, if not a math array, group thead & tbody rows
-    elsif (!$body->isMath) {    # in case already marked w/thead|tbody
+    elsif ($hashead && !$body->isMath) {    # in case already marked w/thead|tbody
       alignment_regroup_rows($document, $node); } }
-  return $node; }
 
-# Deprecated
-sub constructAlignment {
-  my ($document, $body, %props) = @_;
-  Info('deprecated', 'constructAlignment', $document,
-    "The sub constructAlignment is a deprecated way to create Alignments",
-    "See LaTeX.pool {tabular} for the new way.");
-  my $alignment;
-  # Find the alignment that is embedded somewhere within body!
-  # See \@open@alignment for where this gets set into the Whatsit!
-  while (!($alignment = $body->getProperty('alignment'))) {
-    ($body) = grep { $_->getProperty('alignment') } $body->unlist; }
-  $$alignment{isMath} = 1 if $body->isMath;
-  # Merge the specified props with what's already in the Alignment
-  if (my $attr = $props{attributes}) {
-    map { $$alignment{properties}{attributes}{$_} = $$attr{$_} } keys %$attr; }
-  map { $$alignment{properties}{$_} = $props{$_} } grep { $_ ne 'attributes' } keys %props;
-  return $alignment->beAbsorbed($document); }
+  return $node; }
 
 #======================================================================
 # Normalize an alignment before construction
-# * scanning for empty rows and collapse them
-# * marking columns covered by row & column spans
-# * tweak borders into the right places while doing this.
-
-# Tasks:
-#  (1) a trailing \\ in the alignment will generate an empty row.
-#     Note that the trailing \\ is required to get an \hline at the bottom!
-#     It is empty in the sense that no cells have "real" content
-#     but may have content generated from the template!
-#     This emptiness is sensed by inner@column.
-#     So, if we find such an empty row, we need to remove it,
-#     but copy it's top border to a bottom border of the preceding row!
-#  (2) Some table constructs, particularly Knuth's fancy ones,
-#     have empty columns for spacing purposes.
-#     These likely should be removed from the "logical" table we construct.
-#     Here, emptiness should probably be that there is no text content
-#     in the cell's at all (template data is presumably meaningful).
-#     But here, also, border data may need to be moved (but l/r borders)
-#  (3) put border attributes in a "normal" form to ease use as html's class attribute.
-#     Ie: group by l/r/t/b w/ spaces between groups.
-
-# NOTE: Another cleanup issue:
-# With \halign, Knuth seems to like to introduce many empty columns for spacing.
-# It may be useful to remove such columns?
-# Probably have to
+# * consolodating column & row spanning information
+# * scanning for empty rows & columns and collapsing them
+#   (while accounting for spanning, and copying borders appropriately)
+# Note that a trailing \\ in allignment (often needed to effect \hline)
+# causes an empty row at the end. Other fancy layout fine-tuning often
+# involves adding extra rows & columsn for spacing.  HTML's table model
+# is more forgiving that TeX's, so we don't need these extras
+# and, in fact, they often mess up the html layout!
+# However, math alignments, and those with expected structure (eg. eqnarray)
+# should generally NOT have rows & columns collapsed --- except the last row!
 
 sub normalizeAlignment {
   my ($self) = @_;
   return if $$self{normalized};
-  my @filtering = @{ $$self{rows} };
-  my @rows      = ();
-  while (my $row = shift(@filtering)) {
-    foreach my $c (@{ $$row{columns} }) {    # Fill in empty on completely empty columns
-      $$c{empty} = 1 unless $$c{boxes} && $$c{boxes}->unlist; }
-    if (grep { !$$_{empty} } @{ $$row{columns} }) {    # Not empty! so keep it
-      push(@rows, $row); }
-    elsif (my $next = $filtering[0]) {    # Remove empty row, but copy top border to NEXT row
-      if ($$row{empty}) {                 # Only remove middle rows if EXPLICITLY marked (\noalign)
-        my $nc = scalar(@{ $$row{columns} });
-        for (my $c = 0 ; $c < $nc ; $c++) {
-          my $border = $$row{columns}[$c]{border} || '';
-          $border =~ s/[^tTbB]//g;        # mask all but top & bottom border
-          $border =~ s/./t/g;             # but convert to top
-          $$next{columns}[$c]{border} .= $border; } }    # add to next row
-      else {
-        push(@rows, $row); } }
-    else {    # Remove empty last row, but copy top border to bottom of prev.
-      my $prev = $rows[-1];
-      my $nc   = scalar(@{ $$row{columns} });
-      for (my $c = 0 ; $c < $nc ; $c++) {
-        my $border = $$row{columns}[$c]{border} || '';
-        $border =~ s/[^tT]//g;    # mask all but top border
-        $border =~ s/./b/g;       # convert to bottom
-        $$prev{columns}[$c]{border} .= $border; } }    # add to previous row.
-  }
-  $$self{rows} = [@rows];
+  my $ismath = $$self{isMath};
+  my $preserve = $$self{isMath} || $self->getProperty('preserve_structure');
 
+  my @rows = @{ $$self{rows} };
   # Mark any cells that are covered by rowspans
   for (my $i = 0 ; $i < scalar(@rows) ; $i++) {
     my @row = @{ $rows[$i]->{columns} };
 
     for (my $j = 0 ; $j < scalar(@row) ; $j++) {
       my $col = $row[$j];
-      # scan the row for spanned columns that contain spanned rows!
-      if (my $nc = $$col{colspan} || 1) {
-        if ($nc > 1) {
-          foreach (my $jj = $j + 1 ; $jj < $j + $nc ; $jj++) {
-            if (my $nr = $row[$jj]{rowspan}) {
-              $$col{rowspan} = $nr; } } } }
-      my $nr = $$col{rowspan} || 1;
-      if ($nr > 1) {
+      my ($nc, $nr);
+      # scan the row for spanned columns that also span rows! Move rowspan to leading column
+      if (($nc = $$col{colspan} || 1) > 1) {
+        foreach (my $jj = $j + 1 ; $jj < $j + $nc ; $jj++) {
+          my $ccol = $row[$jj];
+          $$ccol{skipped}    = 1;
+          $$ccol{colspanned} = $j;    # note that this column is spanned by column $j
+          if (my $nr = $$ccol{rowspan}) {    # If this spanned column has rowspan
+            $$col{rowspan} = $nr; } } }      # copy rowspan to initial column
+      if (($nr = $$col{rowspan} || 1) > 1) {    # If this column spans rows
         my $nc = $$col{colspan} || 1;
+        # Mark all spanned columns in following rows as skipped.
         for (my $ii = $i + 1 ; $ii < $i + $nr ; $ii++) {
           if (my $rrow = $rows[$ii]) {
             for (my $jj = $j ; $jj < $j + $nc ; $jj++) {
               if (my $ccol = $$rrow{columns}[$jj]) {
-                $$ccol{skipped} = 1; } } } }
-        # And, if the last (skipped) columns have a bottom border, copy that to the rowspanned col
+                $$ccol{skipped}    = 1;
+                $$ccol{rowspanned} = $i; } } } }    # note that this column is spanned by row $i
+            # And, if the last (skipped) columns have a bottom border, copy that to the rowspanned col
         if (my $rrow = $rows[$i + $nr - 1]) {
           my $sborder = '';
           for (my $jj = $j ; $jj < $j + $nc ; $jj++) {
@@ -383,9 +333,93 @@ sub normalizeAlignment {
           $$col{border} .= $sborder if $sborder; }
       } } }
 
+#  if (!$ismath) {                       # Best not to do this in math? At least not in equationgroups!
+# Now scan for and remove empty rows & columns
+# but copying borders and adjusting rowspan's & colspan's appropriately.
+# First, do rows.
+  my @filtered = ();
+  for (my $i = 0 ; $i < scalar(@rows) ; $i++) {
+    my $row = $rows[$i];
+    foreach my $col (@{ $$row{columns} }) {    # Mark all empty columns
+      $$col{empty} = 1 unless $$col{boxes} && $$col{boxes}->unlist; }
+    if (grep { !$$_{empty} } @{ $$row{columns} }) {    # Not empty! so keep it
+      push(@filtered, $row); }
+    elsif (my $next = $rows[$i + 1]) {    # Remove empty row, but copy top border to NEXT row
+      if ($preserve) {
+        push(@filtered, $row); next; }    # don't remove inner rows from math
+      my $nc = scalar(@{ $$row{columns} });
+      for (my $j = 0 ; $j < $nc ; $j++) {
+        my $col = $$row{columns}[$j];
+        if (defined $$col{rowspanned}) {
+          $rows[$$col{rowspanned}]{columns}[$j]{rowspan}--; }    # Decrement rowspan of spanning column
+        my $border = $$col{border} || '';
+        $border =~ s/[^tTbB]//g;                                 # mask all but top & bottom border
+        $border =~ s/b/t/g;                                      # but convert to top
+        $border =~ s/B/T/g;                                      # but convert to top
+        $$next{columns}[$j]{border} .= $border; } }              # add to next row
+    else {    # Remove empty last row, but copy top border to bottom of prev.
+      my $prev = $filtered[-1];
+      my $nc   = scalar(@{ $$row{columns} });
+      for (my $j = 0 ; $j < $nc ; $j++) {
+        my $col = $$row{columns}[$j];
+        if (defined $$col{rowspanned}) {
+          $rows[$$col{rowspanned}]{columns}[$j]{rowspan}--; }    # Decrement rowspan of spanning column
+        my $border = $$col{border} || '';
+        $border =~ s/[^tT]//g;                                   # mask all but top border
+        $border =~ s/t/b/g;                                      # convert to bottom
+        $border =~ s/T/B/g;                                      # convert to bottom
+        my $ccol = $$prev{columns}[$j];
+        if (defined $$ccol{rowspanned}) {                        # skip to spanning column if rowspanned!
+          $ccol = $rows[$$ccol{rowspanned}]{columns}[$j]; }
+        $$ccol{border} .= $border; } }                           # add to previous row.
+  }
+  @rows = @filtered;
+  $$self{rows} = [@filtered];
+  #return;
+  # Now columns.
+  if (!$preserve) {    # Don't remove empty columns from math.
+    my $nc = 0;
+    foreach my $row (@rows) {
+      my $n = scalar(@{ $$row{columns} });
+      $nc = $n if $n > $nc; }
+    for (my $j = $nc - 1 ; $j >= 0 ; $j--) {
+      if (!grep { (defined $$_{columns}[$j]) && !$$_{columns}[$j]{empty} } @rows) {    # Empty!
+        foreach my $row (@rows) {
+          if (my $col = $$row{columns}[$j]) {
+            if (defined $$col{colspanned}) {
+              $$row{columns}[$$col{colspanned}]{colspan}--; }    # Decrement colspan of spanning column
+            my $border = $$col{border} || '';
+            if ($j > 0) {
+              my $prev = $$row{columns}[$j - 1];
+              if (my $jj = $$prev{colspanned}) {
+                $prev = $$row{columns}[$jj]; }
+              $border =~ s/[^rRlL]//g;                           # mask all but left border
+              $border =~ s/l/r/g;                                # convert to right
+              $border =~ s/L/R/g;                                # convert to right
+              $$prev{border} .= $border;
+              if (my @preserve = preservedBoxes($$col{boxes})) {    # Copy boxes over, in case side effects?
+                $$prev{boxes} = LaTeXML::Core::List($$prev{boxes}
+                  ? ($$prev{boxes}->unlist, @preserve) : @preserve); }
+            }
+            elsif (my $next = $$row{columns}[1]) {
+              my $border = $$col{border} || '';
+              $border =~ s/[^rRlL]//g;                              # mask all but left & right border
+              $border =~ s/r/l/g;                                   # but convert to left
+              $border =~ s/R/L/g;                                   # but convert to left
+              $$next{border} .= $border;                            # add to next row
+              if (my @preserve = preservedBoxes($$col{boxes})) {    # Copy boxes over, in case side effects?
+                $$next{boxes} = LaTeXML::Core::List($$col{boxes}
+                  ? (@preserve, $$next{boxes}->unlist) : @preserve); }
+            }    # Now, remove the column
+            $$row{columns} = [grep { $_ ne $col } @{ $$row{columns} }];
+          } } } }
+  }
   $$self{normalized} = 1;
   return; }
 
+sub preservedBoxes {
+  my ($boxes) = @_;
+  return ($boxes ? grep { $_->getProperty('alignmentPreserve') } $boxes->unlist : ()); }
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Dealing with templates
 
@@ -415,14 +449,13 @@ sub ReadAlignmentTemplate {
       && $defn->isExpandable) {
       # A variation on $defn->invoke, so we can reconstruct the reversion
       my @args = $defn->readArguments($gullet);
-      my @exp = $defn->doInvocation($gullet, @args);
-      if (@exp) {    # This just expanded into other stuff
-        $gullet->unread(@exp); }
+      if (my $exp = $defn->doInvocation($gullet, @args)) {    # This just expanded into other stuff
+        $gullet->unread(@{$exp}); }
       else {
         push(@tokens, $op);
         if (my $param = $defn->getParameters) {
           push(@tokens, $param->revertArguments(@args)); } } }
-    elsif ($op->equals(T_BEGIN)) {    # Wrong, but a safety valve
+    elsif ($op->equals(T_BEGIN)) {                            # Wrong, but a safety valve
       $gullet->unread($gullet->readBalanced->unlist); }
     else {
       Warn('unexpected', $op, $gullet, "Unrecognized tabular template '" . Stringify($op) . "'"); }
@@ -474,12 +507,12 @@ sub guess_alignment_headers {
     push(@cols, [map { $$_[$c] } @rows]); }
 
   # Attempt to recognize header lines.
-  if (alignment_characterize_lines(0, 0, @rows)) { }
+  if (alignment_characterize_lines($document, 0, 0, @rows)) { }
   # This usually does something unpleasant
 ##  else {
 ##    print STDERR "Retry characterizing lines in reverse\n" if $LaTeXML::Core::Alignment::DEBUG;
 ##    $reversed=alignment_characterize_lines(0,1,reverse(@rows)); }
-  alignment_characterize_lines(1, 0, @cols);
+  alignment_characterize_lines($document, 1, 0, @cols);
   # Did we go overboard?
   my %n = (h => 0, d => 0);
   foreach my $r (@rows) {
@@ -487,6 +520,7 @@ sub guess_alignment_headers {
       $n{ $$c{cell_type} }++; } }
   print STDERR "$n{h} header, $n{d} data cells\n" if $LaTeXML::Core::Alignment::DEBUG;
   if ($n{d} == 1) {    # Or any other heuristic?
+    $n{h} = 0;
     foreach my $r (@rows) {
       foreach my $c (@$r) {
         $$c{cell_type} = 'd';
@@ -495,33 +529,43 @@ sub guess_alignment_headers {
   # But not if it's a math array, or if reversed (since browsers get confused?)
   if (!$ismath && !$reversed) {
     alignment_regroup_rows($document, $table); }
+  if ($n{h}) {    # Found some headers?
+    $document->addClass($table, 'ltx_guessed_headers'); }
+
   # Debugging report!
   summarize_alignment([@rows], [@cols]) if $LaTeXML::Core::Alignment::DEBUG;
   return; }
 
 #======================================================================
-# Regroup the rows into thead & tbody
-# (not messing with tfoot, ATM; HTML4 wants it ONLY after the thead; HTML5 also allows at end!)
+# Regroup the rows into thead, tbody & tfoot
 # Any leading rows, all of whose cells have attribute thead should be in thead.
 # UNLESS any of them have a rowspan that extends PAST the end of the thead!!!!
+# trailing rows marked as thead go into tfoot.
 sub alignment_regroup_rows {
   my ($document, $table) = @_;
   my @rows     = $document->findnodes("ltx:tr", $table);
   my @heads    = ();
   my $maxreach = 0;
+  # Scan initial rows as potential thead
   while (@rows) {
     my @cells = $document->findnodes('ltx:td', $rows[0]);
     # Non header cells, done.
-    last if scalar(grep { (!$_->getAttribute('thead'))
-          && (($_->getAttribute('class') || '') !~ /\bthead\b/) }
-        @cells);
+    last if scalar(grep { (!$_->getAttribute('thead')) } @cells);
     push(@heads, shift(@rows));
     my $line = scalar(@heads);
     $maxreach = max($maxreach, map { ($_->getAttribute('rowspan') || 0) + $line } @cells); }
   if ($maxreach > scalar(@heads)) {    # rowspan crossed over thead boundary!
     unshift(@rows, @heads); @heads = (); }
+  # scan trailing rows as potential tfoot
+  my @foots = ();
+  while (@rows) {
+    my @cells = $document->findnodes('ltx:td', $rows[-1]);
+    # Non header cells, done.
+    last if scalar(grep { (!$_->getAttribute('thead')) } @cells);
+    push(@foots, pop(@rows)); }
   $document->wrapNodes('ltx:thead', @heads) if @heads;
   $document->wrapNodes('ltx:tbody', @rows)  if @rows;
+  $document->wrapNodes('ltx:tfoot', @foots) if @foots;
   return; }
 
 #======================================================================
@@ -673,8 +717,10 @@ my $MAX_ALIGNMENT_HEADER_LINES = 4;    # [CONSTANT]
 # Both header lines and data lines can consist of several neighboring lines.
 # Check that header lines are `similar' to each other.  So, the strategy is to look
 # for a `hump' in the line differences and consider blocks containing these lines to be potential headers.
+my @axisname = ('column', 'row');
+
 sub alignment_characterize_lines {
-  my ($axis, $reversed, @lines) = @_;
+  my ($document, $axis, $reversed, @lines) = @_;
   my $n = scalar(@lines);
   return if $n < 2;
   local @::TABLINES = @lines;
@@ -732,7 +778,7 @@ sub alignment_characterize_lines {
               && ((($i == 0) && !$$cell{ ($axis == 0 ? 'l' : 't') })
                 || (($i == $nn) && !$$cell{ ($axis == 0 ? 'r' : 'b') }))) { }
             else {
-              $$cell{cell}->setAttribute(thead => 'true'); } }
+              $document->addSSValues($$cell{cell}, thead => $axisname[$axis]); } }
           $i++; } }
       return 1; } }
   return; }

@@ -55,6 +55,8 @@ sub process {
 
     $self->addNavigation($tree, @nav) if @nav;
   }
+  my $n = scalar(@docs);
+  NoteProgressDetailed(($n > 1 ? " [Split into in $n TOCs]" : "[not split]"));
   return @docs; }
 
 # Get the nodes in the document that WILL BECOME separate "pages".
@@ -94,7 +96,13 @@ sub prenamePages {
 sub processPages {
   my ($self, $doc, @entries) = @_;
   my $rootid = $doc->getDocumentElement->getAttribute('xml:id');
-  my @docs   = ();
+  # Before any document surgery, copy inheritable attributes.
+  foreach my $entry (@entries) {
+    my $node = $$entry{node};
+    foreach my $attr (qw(xml:lang backgroundcolor)) {
+      if (my $anc = $doc->findnode('ancestor-or-self::*[@' . $attr . '][1]', $node)) {
+        $node->setAttribute($attr => $anc->getAttribute($attr)); } } }
+  my @docs = ();
   while (@entries) {
     my $parent = $entries[0]->{node}->parentNode;
     # Remove $page & ALL following siblings (backwards).
@@ -112,7 +120,7 @@ sub processPages {
       $doc->removeNodes(shift(@removed));
       my $id = $page->getAttribute('xml:id');
       my $tocentry = ['ltx:tocentry', {},
-        ['ltx:ref', { idref => $id, show => 'fulltitle' }]];
+        ['ltx:ref', { idref => $id, show => 'toctitle' }]];
       push(@toc, $tocentry);
       # Due to the way document building works, we remove & process children pages
       # BEFORE processing this page.
@@ -123,7 +131,7 @@ sub processPages {
       push(@docs, $subdoc, @childdocs); }
     # Finally, add the toc to reflect the consecutive, removed nodes, and add back the remainder
     my $type = $parent->localname;
-    $doc->addNodes($parent, ['ltx:TOC', {}, ['ltx:toclist', { class => 'ltx_toc_' . $type }, @toc]])
+    $doc->addNodes($parent, ['ltx:TOC', {}, ['ltx:toclist', { class => 'ltx_toclist_' . $type }, @toc]])
       if @toc && !$doc->findnodes("descendant::ltx:TOC[\@role='contents']", $parent);
     map { $parent->addChild($_) } @removed; }
   return @docs; }

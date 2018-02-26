@@ -317,7 +317,7 @@ sub applyLayout_break {
   # (but we haven't recorded that anywhere!)
   splice(@$node, 2, scalar(@children),
     ($$layout{lhs_pos}
-      ? ["m:mtable", { align => 'baseline 1', columnalign => 'left',
+      ? ["m:mtable", { align => 'baseline 1', columnalign => 'left', columnspacing => '0.1em',
           ($$layout{displaystyle} ? (displaystyle => 'true') : ()) },
         ["m:mtr", {},
           ["m:mtd", {}, @firstrow[0 .. $$layout{lhs_pos} - 1]],
@@ -513,7 +513,9 @@ sub layout {
   my $name = nodeName($node);
   $name =~ s/\w://;
   my $handler = "layout_$name";
-  $handler = eval { \&$handler; };
+  $handler = eval {
+    local $LaTeXML::IGNORE_ERRORS = 1;
+    \&$handler; };
   if (!$handler) {
     LaTeXML::Post::Fatal("unexpected", $name, $node,
       "Can't find layout handler for $name"); }
@@ -625,7 +627,7 @@ sub asRow {
       elsif ($BREAKAFTEROPS{$content}) {
         $lhs_pos          = 0;
         $next_indentation = 0;
-        push(@breaks, [$i + 1, $content, $demerits]); }
+        push(@breaks, [$i + 1, $content, $demerits]) if $running > $pass_indent; }
       elsif ($CONVERTOPS{$content}) {
         $lhs_pos          = 0;
         $next_indentation = $normal_indentation;

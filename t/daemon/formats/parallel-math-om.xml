@@ -1,4 +1,4 @@
-<Math mode="inline" xml:id="p2.m1" tex="1+2=3" text="1 + 2 = 3" fragid="p2.m1">
+<Math xmlns="http://dlmf.nist.gov/LaTeXML" xmlns:om="http://www.openmath.org/OpenMath" xmlns:m="http://www.w3.org/1998/Math/MathML" mode="inline" xml:id="p2.m1" tex="1+2=3" text="1 + 2 = 3" fragid="p2.m1">
   <om:OMOBJ>
     <om:OMATTR>
       <om:OMS cd="Alternate" name="application/mathml-presentation+xml"/>
@@ -43,8 +43,8 @@
           </XMApp>
         </XMath>
       </om:OMFOREIGN>
-      <om:OMS cd="Alternate" name="TeX"/>
-      <om:OMFOREIGN>1+2=3</om:OMFOREIGN>
+      <om:OMS cd="Alternate" name="application/x-tex"/>
+      <om:OMSTR>1+2=3</om:OMSTR>
       <om:OMA>
         <om:OMS cd="latexml" name="equals"/>
         <om:OMA>
