@@ -8,9 +8,9 @@ latexml (0.8.2-1) UNRELEASED; urgency=medium
   * install manual.pdf into texmf/doc and /u/s/d/latexml
   * call dh_installtex to make sure ls-R is uptodate
   * don't run mktexlsr during installation
-  * update to 0.8.2 (Closes: #858121)
+  * update to 0.8.2 (Closes: #858121, #839639)
 
- -- Norbert Preining <preining@debian.org>  Mon, 26 Feb 2018 09:24:57 +0900
+ -- Norbert Preining <preining@debian.org>  Mon, 26 Feb 2018 09:29:34 +0900
 
 latexml (0.8.1-1) unstable; urgency=medium
 
