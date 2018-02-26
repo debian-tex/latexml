@@ -3,7 +3,7 @@ Section: tex
 Priority: extra
 Maintainer: Peter Ralph <petrel.harp@gmail.com>
 Uploaders: Norbert Preining <norbert@preining.info>
-Build-Depends: debhelper (>= 9), libparse-recdescent-perl, libimage-size-perl, libarchive-zip-perl, libfile-which-perl, libio-string-perl, libjson-xs-perl, liburi-perl, libwww-perl, libxml-libxml-perl, libxml-libxslt-perl, texlive-latex-base
+Build-Depends: debhelper (>= 9), libparse-recdescent-perl, libimage-size-perl, libarchive-zip-perl, libfile-which-perl, libio-string-perl, libjson-xs-perl, liburi-perl, libwww-perl, libxml-libxml-perl, libxml-libxslt-perl, texlive-latex-base, tex-common
 Standards-Version: 3.9.6
 Homepage: http://dlmf.nist.gov/LaTeXML/
 #Vcs-Git: git://anonscm.debian.org/collab-maint/latexml.git
@@ -11,7 +11,7 @@ Homepage: http://dlmf.nist.gov/LaTeXML/
 
 Package: latexml
 Architecture: all
-Depends: ${perl:Depends}, ${misc:Depends}, libparse-recdescent-perl, libxml2, libxml-libxml-perl, libxslt1.1, libxml-libxslt-perl, libuuid-tiny-perl, libarchive-zip-perl, libio-string-perl, libjson-xs-perl, libwww-perl, liburi-perl, libfile-which-perl, libimage-size-perl, imagemagick, perlmagick, texlive-latex-base
+Depends: ${perl:Depends}, ${misc:Depends}, libparse-recdescent-perl, libxml2, libxml-libxml-perl, libxslt1.1, libxml-libxslt-perl, libuuid-tiny-perl, libarchive-zip-perl, libio-string-perl, libjson-xs-perl, libwww-perl, liburi-perl, libfile-which-perl, libimage-size-perl, imagemagick, libimage-magick-perl, texlive-latex-base
 Description: LaTeX to XML Converter
  latexml is a program, written in Perl, that attempts to faithfully mimic
  TeX's behaviour, but produces XML instead of dvi. The document model of

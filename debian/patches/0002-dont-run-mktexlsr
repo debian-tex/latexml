@@ -1,0 +1,22 @@
+---
+ Makefile.PL |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- LaTeXML.git.orig/Makefile.PL
++++ LaTeXML.git/Makefile.PL
+@@ -229,13 +229,13 @@
+ 		write "$(DESTINSTALLTEXMFDIR)/.packlist" \
+ 		"$(INST_TEXMFDIR)" "$(DESTINSTALLTEXMFDIR)" ) \
+ 	||   echo "No TeX installation, skipping installing LaTeXML TeX packages"
+-	$(NOECHO) ($(PERLRUN) -e "exit(1) if -w shift;" -- "$(INSTALLTEXMFBASEDIR)" || mktexlsr) \
++	$(NOECHO) ($(PERLRUN) -e "exit(1) if -w shift;" -- "$(INSTALLTEXMFBASEDIR)" || true) \
+ 	||   echo "No write permission for $(INSTALLTEXMFBASEDIR), skipping mktexlsr"
+ 
+ uninstall ::
+ 	$(NOECHO) (($(PERLRUN) -e "exit(1) unless -w shift;" -- "$(DESTINSTALLTEXMFBASEDIR)") && \
+ 		$(UNINSTALL) "$(INSTALLTEXMFDIR)/.packlist" && \
+-		($(PERLRUN) -e "exit(1) if -w shift;" -- "$(INSTALLTEXMFDIR)" || mktexlsr)) \
++		($(PERLRUN) -e "exit(1) if -w shift;" -- "$(INSTALLTEXMFDIR)" || true)) \
+ 	|| echo "No write permission for $(INSTALLTEXMFBASEDIR), skipping uninstalling LaTeXML TeX packages"
+ 
+ InstallTeXStyles
