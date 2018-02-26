@@ -9,8 +9,10 @@ latexml (0.8.2-1) UNRELEASED; urgency=medium
   * call dh_installtex to make sure ls-R is uptodate
   * don't run mktexlsr during installation
   * update to 0.8.2 (Closes: #858121, #839639)
+  * set VCS fields to Salsa
+  * change maintainer to Debian TeX Team, put Peter and me in Uploaders
 
- -- Norbert Preining <preining@debian.org>  Mon, 26 Feb 2018 09:29:34 +0900
+ -- Norbert Preining <preining@debian.org>  Mon, 26 Feb 2018 09:41:00 +0900
 
 latexml (0.8.1-1) unstable; urgency=medium
 
