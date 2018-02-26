@@ -1,0 +1,15 @@
+---
+ lib/LaTeXML/Common/Config.pm |    2 --
+ 1 file changed, 2 deletions(-)
+
+--- latexml-debian.orig/lib/LaTeXML/Common/Config.pm
++++ latexml-debian/lib/LaTeXML/Common/Config.pm
+@@ -1442,8 +1442,6 @@
+ 
+ =over 4
+ 
+-=back
+-
+ =item C<--autoflush>=I<count>
+ 
+ Automatically restart the daemon after converting "count" inputs.

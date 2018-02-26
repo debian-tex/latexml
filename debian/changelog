@@ -11,8 +11,9 @@ latexml (0.8.2-1) unstable; urgency=medium
   * update to 0.8.2 (Closes: #858121, #839639)
   * set VCS fields to Salsa
   * change maintainer to Debian TeX Team, put Peter and me in Uploaders
+  * fix pod errors
 
- -- Norbert Preining <norbert@preining.info>  Mon, 26 Feb 2018 09:52:21 +0900
+ -- Norbert Preining <norbert@preining.info>  Mon, 26 Feb 2018 10:01:53 +0900
 
 latexml (0.8.1-1) unstable; urgency=medium
 
