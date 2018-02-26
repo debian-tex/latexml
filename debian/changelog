@@ -1,4 +1,4 @@
-latexml (0.8.2-1) UNRELEASED; urgency=medium
+latexml (0.8.2-1) unstable; urgency=medium
 
   [ Peter Ralph ]
   * switched dependency from transitional package perlmagick to 
@@ -12,7 +12,7 @@ latexml (0.8.2-1) UNRELEASED; urgency=medium
   * set VCS fields to Salsa
   * change maintainer to Debian TeX Team, put Peter and me in Uploaders
 
- -- Norbert Preining <preining@debian.org>  Mon, 26 Feb 2018 09:41:00 +0900
+ -- Norbert Preining <norbert@preining.info>  Mon, 26 Feb 2018 09:52:21 +0900
 
 latexml (0.8.1-1) unstable; urgency=medium
 
