@@ -1,9 +1,12 @@
-latexml (0.8.2-2) UNRELEASED; urgency=medium
+latexml (0.8.2-2) unstable; urgency=medium
 
   [ Hilmar Preuße ]
   * Don't try to install non-existant README file (Closes: #903351).
 
- -- Norbert Preining <preining@debian.org>  Mon, 16 Jul 2018 10:10:53 +0200
+  [ Norbert Preining ]
+  * install README.pod instead of missing README
+
+ -- Norbert Preining <preining@debian.org>  Wed, 18 Jul 2018 08:52:16 +0900
 
 latexml (0.8.2-1) unstable; urgency=medium
 
