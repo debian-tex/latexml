@@ -43,7 +43,7 @@ binary-indep: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs
-	dh_installdocs
+	dh_installdocs README.pod
 	dh_installexamples
 	dh_installman
 	dh_link usr/share/texmf/doc/latexml/manual.pdf \
