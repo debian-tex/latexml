@@ -2,8 +2,9 @@ latexml (0.8.3-1) unstable; urgency=medium
 
   * New upstream version 0.8.3
   * add libtext-unidecode-perl to deps (Closes: #893528)
+  * fix Perl shebang lines according to Debian policy
 
- -- Norbert Preining <preining@debian.org>  Mon, 13 Aug 2018 09:16:32 +0900
+ -- Norbert Preining <preining@debian.org>  Mon, 13 Aug 2018 09:29:28 +0900
 
 latexml (0.8.2-2) unstable; urgency=medium
 
