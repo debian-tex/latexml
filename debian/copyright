@@ -38,6 +38,7 @@ License:
 The Debian packaging is:
 
     Copyright (C) 2015 Peter Ralph <petrel.harp@gmail.com>
+    Copyright (C) 2018 Norbert Preining <norbert@preining.info>
 
 and is licensed under the GPL version 3,
 see "/usr/share/common-licenses/GPL-3".
