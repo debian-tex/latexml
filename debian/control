@@ -2,12 +2,12 @@ Source: latexml
 Section: tex
 Priority: optional
 Maintainer: Debian TeX maintainers <debian-tex-maint@lists.debian.org>
-Uploaders: Norbert Preining <preining@debian.org>, Peter Ralph <petrel.harp@gmail.com>
+Uploaders: Norbert Preining <norbert@preining.info>, Peter Ralph <petrel.harp@gmail.com>
 Build-Depends: debhelper (>= 9), libparse-recdescent-perl, libimage-size-perl, libarchive-zip-perl, libfile-which-perl, libio-string-perl, libjson-xs-perl, liburi-perl, libwww-perl, libxml-libxml-perl, libxml-libxslt-perl, texlive-latex-base, tex-common, libtext-unidecode-perl
-Standards-Version: 4.1.3
+Standards-Version: 4.2.1
 Homepage: http://dlmf.nist.gov/LaTeXML/
-Vcs-Git: https://salsa.debian.org/tex-team/latexml.git
-Vcs-Browser: https://salsa.debian.org/tex-team/latexml
+Vcs-Git: https://github.com/debian-tex/latexml.git
+Vcs-Browser: https://github.com/debian-tex/latexml
 
 Package: latexml
 Architecture: all

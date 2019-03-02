@@ -1,3 +1,9 @@
+latexml (0.8.3-2) unstable; urgency=medium
+
+  * update VCS, my email, bump standards version
+
+ -- Norbert Preining <norbert@preining.info>  Sat, 02 Mar 2019 14:17:31 +0900
+
 latexml (0.8.3-1) unstable; urgency=medium
 
   * New upstream version 0.8.3
