@@ -1,3 +1,9 @@
+latexml (0.8.3-3) unstable; urgency=medium
+
+  * rebuild for source only upload
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 19 Jul 2019 14:14:21 +0900
+
 latexml (0.8.3-2) unstable; urgency=medium
 
   * update VCS, my email, bump standards version
