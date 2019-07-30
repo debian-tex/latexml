@@ -1,3 +1,9 @@
+latexml (0.8.3-4) UNRELEASED; urgency=medium
+
+  * Add debian/watch file.
+
+ -- Hilmar Preusse <hille42@web.de>  Tue, 30 Jul 2019 06:56:15 +0200
+
 latexml (0.8.3-3) unstable; urgency=medium
 
   * rebuild for source only upload
