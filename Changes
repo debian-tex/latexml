@@ -1,12 +1,34 @@
+0.8.4 2019-06-27
+      - Various fidelity and robustness improvements, along with more test cases
+      - Improved source locators for debugging and other purposes.
+      - More flexible backmatter, allowing multiple bibliographies, indices, etc.
+      - Improvements to math lexer
+      - Support for Chocolatey package manager
+      - More generalized support for lists of (contents, tables, figures, etc)
+      - New bindings: aipcheck.tex, aipproc.cls, bibunits.sty, blindtext.sty,
+        calrsfs.sty, chapterbib.sty, chngcntr.sty, csquotes.def, csquotes.sty,
+        fancyheadings.sty, footnote.sty, mathdots.sty, nopageno.sty, PoS.cls,
+        quantumarticle.cls, remreset.sty, sidecap.sty, subfiles.(cls|sty),
+        tcilatex.tex, thm-restate.sty, twoopt.sty, underscore.sty, undertilde.sty,
+        varioref.sty, varwidth. styvmargin.sty
+
+      Thanks: Deyan Ginev, Tom Wiesing, Ben Firsch, Michael Kohlhase,
+        adhilton, angerhang, Takuto Asakura, asmaier, Luis Berlioz,
+        Alex Bobrikovich, Christoph Hauert, giovanni111, goska,
+        Andre Greiner-Petter, Sam Kacer, Bernard Kleine, Jakub Kukul,
+        Raffaele Mancuso, molke-productions, Alexander Nozic,
+        Hans Olsson, raspatan, Red-Quill, Moritz Schubotz, seuliang,
+        Scott Walter, Frederic Wang, Dietmar Winkler, Sigfried Zoetzsche
+
 0.8.3 2018-07-30
       - Way too long between releases...
       - Too many bug fixes, fidelity improvements and enhancements to list.
       - (nominal) support for TEI format 
       - New Bindings: aastex61.cls, aastex6.cls, accents.sty, acmart.cls,
         aecompl.sty, algorithm2e.sty, appendix.sty, cases.sty,
-        cleveref.sty, empheq.sty, endnotes.sty, enumitem.sty,
+        cleveref.sty, csquotes.sty, empheq.sty, endnotes.sty, enumitem.sty,
         etex.sty, etoolbox.sty, flowchart.sty, flushend.sty,
-        french.ldf, gensymb.sty, icml2018.sty, ieeeconf.cls, IEEEtran.cls,
+        french.ldf, gensymb.sty, icml2018.sty (& others), ieeeconf.cls, IEEEtran.cls,
         jheppub.sty, lastpage.sty, lipsum.sty, makecell.sty,
         microtype.sty, mleftright.sty, mnras.cls, moderncv.cls,
         newfloat.sty, newtxmath.sty, newtxtext.sty, pdfpages.sty,
@@ -16,12 +38,16 @@
         thmtools.sty, titlesec.sty, titling.sty, todonotes.sty,
         tracefnt.sty, turing.sty, utf8x.def, wiki.sty, xkeyval.sty,
         xkvview.sty
+      - 2 Experimental features:
+          * xpath source locators: for locating the origin of the XML in the TeX sources.
+          * math lexemes: textual encoding of mathematics for data mining studies.
+          Please consult the mailing list for more information.
 
      Thanks: Deyan Ginev, Tom Wiesing, Michael Kohlhase;
        And thanks for reports from Siegfriedzoetzche, Grief, MikePetullo, 
        matteosecli, goska, teepeemm, Fred Wang, Ben Firsch, Joe Cornelli,
        Bernard Kleine, eshellman, swalter62, asmaier, charlyms, senthilmm,
-       cooperstevenson, Andre G-P, blahah, nthiery, webbery, evoludolab, ilovezfs,
+       cooperstevenson, Andre G-P, blahah, nthiery, webbery, evoludolab, ilovezfs, manwar,
        Moritz Schubotz, wspr, skellat, giovanni111, Thanathan-k, HansOlsson,
        angerhang, Stefan Becuwe, IvanRadianStd, daroloson, sumandoc, gpetty,
        SabinSnorlax, DeathByRegex, QiangF, aimsky, dominique-unruh, SephidehAlassi,
