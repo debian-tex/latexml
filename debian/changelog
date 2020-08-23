@@ -1,4 +1,4 @@
-latexml (0.8.4-2) UNRELEASED; urgency=medium
+latexml (0.8.4-2) unstable; urgency=medium
 
   [ Debian Janitor ]
   * Trim trailing whitespace.
@@ -12,7 +12,7 @@ latexml (0.8.4-2) UNRELEASED; urgency=medium
   * Add a Dep on libpod-parser-perl (Closes: #961157).
   * Add me to list of Uploaders.
 
- -- Hilmar Preusse <hille42@web.de>  Wed, 20 May 2020 23:35:12 +0200
+ -- Hilmar Preusse <hille42@web.de>  Mon, 24 Aug 2020 00:00:25 +0200
 
 latexml (0.8.4-1) unstable; urgency=medium
 
