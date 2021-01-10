@@ -5,7 +5,27 @@ Maintainer: Debian TeX maintainers <debian-tex-maint@lists.debian.org>
 Uploaders: Norbert Preining <norbert@preining.info>,
 	Peter Ralph <petrel.harp@gmail.com>,
 	Hilmar Preusse <hille42@web.de>
-Build-Depends: debhelper-compat (= 12), libparse-recdescent-perl, libimage-size-perl, libarchive-zip-perl, libfile-which-perl, libio-string-perl, libjson-xs-perl, liburi-perl, libwww-perl, libxml-libxml-perl, libxml-libxslt-perl, texlive-latex-base, tex-common, libtext-unidecode-perl
+Build-Depends: debhelper-compat (= 12),
+	libparse-recdescent-perl,
+	libimage-size-perl,
+	libarchive-zip-perl,
+	libfile-which-perl,
+	libio-string-perl,
+	libjson-xs-perl,
+	libpod-parser-perl,
+	libtext-unidecode-perl,
+	liburi-perl,
+	libwww-perl,
+	libxml-libxml-perl,
+	libxml-libxslt-perl,
+	tex-common,
+	texlive-fonts-extra,
+	texlive-latex-base,
+	texlive-latex-extra,
+	texlive-lang-cyrillic,
+	texlive-lang-french,
+	texlive-lang-german,
+	texlive-science
 Standards-Version: 4.2.1
 Rules-Requires-Root: no
 Homepage: https://dlmf.nist.gov/LaTeXML/

@@ -14,7 +14,7 @@ build-stamp:
 	# Add here commands to compile the package.
 	perl Makefile.PL INSTALLDIRS=vendor NOMKTEXLSR=1
 	$(MAKE)
-	#make test
+	make test
 
 	touch build-stamp
 

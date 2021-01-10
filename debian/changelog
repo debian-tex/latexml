@@ -2,6 +2,17 @@ latexml (0.8.5-1) UNRELEASED; urgency=medium
 
   * New upstream release (Closes: #979580).
 
+  * Enable test suite. Add needed packags to BD:
+    - libpod-parser-perl
+    - texlive-fonts-extra (maybe this could be removed, some tests skipped
+      but saves bandwidth and CPU cycles)
+    - texlive-latex-extra
+    - texlive-lang-cyrillic
+    - texlive-lang-french
+    - texlive-lang-german
+    - texlive-science
+  * Add sample files to package.
+
  -- Hilmar Preusse <hille42@web.de>  Sat, 21 Nov 2020 00:23:01 +0100
 
 latexml (0.8.4-2) unstable; urgency=medium
