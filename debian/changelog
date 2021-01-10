@@ -13,6 +13,11 @@ latexml (0.8.5-1) UNRELEASED; urgency=medium
     - texlive-science
   * Add sample files to package.
 
+  * Lintian:
+    - I: quilt-patch-missing-description
+    - P: package-does-not-install-examples
+    - P: silent-on-rules-requiring-root
+
  -- Hilmar Preusse <hille42@web.de>  Sat, 21 Nov 2020 00:23:01 +0100
 
 latexml (0.8.4-2) unstable; urgency=medium
