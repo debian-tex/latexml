@@ -1,4 +1,4 @@
-latexml (0.8.5-1) UNRELEASED; urgency=medium
+latexml (0.8.5-1) unstable; urgency=medium
 
   * New upstream release (Closes: #979580).
 
@@ -20,7 +20,7 @@ latexml (0.8.5-1) UNRELEASED; urgency=medium
     - P: silent-on-rules-requiring-root
     - I: latexml: typo-in-manual-page
 
- -- Hilmar Preusse <hille42@web.de>  Sat, 21 Nov 2020 00:23:01 +0100
+ -- Hilmar Preusse <hille42@web.de>  Sun, 10 Jan 2021 23:47:13 +0100
 
 latexml (0.8.4-2) unstable; urgency=medium
 
