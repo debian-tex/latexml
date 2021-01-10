@@ -1,6 +1,6 @@
 latexml (0.8.5-1) UNRELEASED; urgency=medium
 
-  * New upstream release.
+  * New upstream release (Closes: #979580).
 
  -- Hilmar Preusse <hille42@web.de>  Sat, 21 Nov 2020 00:23:01 +0100
 

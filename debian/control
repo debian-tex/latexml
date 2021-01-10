@@ -7,6 +7,7 @@ Uploaders: Norbert Preining <norbert@preining.info>,
 	Hilmar Preusse <hille42@web.de>
 Build-Depends: debhelper-compat (= 12), libparse-recdescent-perl, libimage-size-perl, libarchive-zip-perl, libfile-which-perl, libio-string-perl, libjson-xs-perl, liburi-perl, libwww-perl, libxml-libxml-perl, libxml-libxslt-perl, texlive-latex-base, tex-common, libtext-unidecode-perl
 Standards-Version: 4.2.1
+Rules-Requires-Root: no
 Homepage: https://dlmf.nist.gov/LaTeXML/
 Vcs-Git: https://github.com/debian-tex/latexml.git
 Vcs-Browser: https://github.com/debian-tex/latexml

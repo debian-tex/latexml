@@ -4,6 +4,8 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+main_package=latexml
+
 build: build-arch build-indep
 build-arch: build-stamp
 build-indep: build-stamp
@@ -17,12 +19,8 @@ build-stamp:
 
 clean:
 	dh_testdir
-	dh_testroot
-	rm -f build-stamp
-
+	#dh_testroot
 	if [ -f Makefile ]; then $(MAKE) clean ;fi
-	rm -f Makefile.old
-
 	dh_clean
 
 install: build
@@ -31,7 +29,7 @@ install: build
 	dh_prep
 	dh_installdirs
 
-	$(MAKE) pure_install INSTALLDIRS=vendor DESTDIR=`pwd`/debian/`dh_listpackages` \
+	$(MAKE) pure_install INSTALLDIRS=vendor DESTDIR=`pwd`/debian/$(main_package) \
 	INSTALLTEXMFDIR=/usr/share/texmf/tex/latex/latexml
 	# install documentation file
 	mkdir -p debian/latexml/usr/share/texmf/doc/latexml
@@ -44,7 +42,7 @@ binary-indep: build install
 	dh_testroot
 	dh_installchangelogs
 	dh_installdocs README.pod
-	dh_installexamples
+	dh_installexamples --exclude=*.t
 	dh_installman
 	dh_link usr/share/texmf/doc/latexml/manual.pdf \
 		usr/share/doc/latexml/manual.pdf
