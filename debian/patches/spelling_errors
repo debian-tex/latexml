@@ -1,0 +1,381 @@
+Description: Fix spelling errors in source code.
+Origin: Hilmar Preusse <hille42@web.de>
+Forwarded: no
+Author: Hilmar Preusse <hille42@web.de>
+Last-Update: 20210110
+
+Index: latexml/bin/latexml
+===================================================================
+--- latexml.orig/bin/latexml	2021-01-10 22:29:46.766285808 +0100
++++ latexml/bin/latexml	2021-01-10 22:29:46.754285737 +0100
+@@ -189,7 +189,7 @@
+  --help             shows this help message.
+ 
+ If I<texfile> is '-', latexml reads the TeX source from standard input.
+-If I<texfile> has an explicit extention of C<.bib>, it is processed
++If I<texfile> has an explicit extension of C<.bib>, it is processed
+ as a BibTeX bibliography.
+ 
+ =head1 OPTIONS AND ARGUMENTS
+@@ -203,7 +203,7 @@
+ =item C<--preload>=I<module>
+ 
+ Requests the loading of an optional module or package.  This may be useful if the TeX code
+-does not specificly require the module (eg. through input or usepackage).
++does not specifically require the module (eg. through input or usepackage).
+ For example, use C<--preload=LaTeX.pool> to force LaTeX mode.
+ 
+ =item C<--preamble>=I<file>, C<--postamble>=I<file>
+Index: latexml/bin/latexmlmath
+===================================================================
+--- latexml.orig/bin/latexmlmath	2021-01-10 22:29:46.766285808 +0100
++++ latexml/bin/latexmlmath	2021-01-10 22:29:46.754285737 +0100
+@@ -413,7 +413,7 @@
+ 
+ =item C<--XMath>=I<file>
+ 
+-Requests convertion to LaTeXML's internal format.
++Requests conversion to LaTeXML's internal format.
+ 
+ =back
+ 
+@@ -424,7 +424,7 @@
+ =item C<--preload>=I<module>
+ 
+ Requests the loading of an optional module or package.  This may be useful if the TeX code
+-does not specificly require the module (eg. through input or usepackage).
++does not specifically require the module (eg. through input or usepackage).
+ For example, use C<--preload=LaTeX.pool> to force LaTeX mode.
+ 
+ =item C<--includestyles>
+Index: latexml/bin/latexmlpost
+===================================================================
+--- latexml.orig/bin/latexmlpost	2021-01-10 22:29:46.766285808 +0100
++++ latexml/bin/latexmlpost	2021-01-10 22:29:46.754285737 +0100
+@@ -798,7 +798,7 @@
+ 
+ This option determines the way that URLs within the documents
+ are formatted, depending on the way they are intended to be served.
+-The default, C<server>, eliminates unneccessary
++The default, C<server>, eliminates unnecessary
+ trailing C<index.html>.  With C<negotiated>, the trailing
+ file extension (typically C<html> or C<xhtml>) are eliminated.
+ The scheme C<file> preserves complete (but relative) urls
+Index: latexml/lib/LaTeXML.pm
+===================================================================
+--- latexml.orig/lib/LaTeXML.pm	2021-01-10 22:29:46.766285808 +0100
++++ latexml/lib/LaTeXML.pm	2021-01-10 22:29:46.754285737 +0100
+@@ -805,7 +805,7 @@
+ =item C<< my $log = $converter->flush_log; >>
+ 
+ Flushes out the accumulated conversion log into $log,
+-         reseting STDERR to its usual stream.
++         resetting STDERR to its usual stream.
+ 
+ =back
+ 
+Index: latexml/lib/LaTeXML/Common/Config.pm
+===================================================================
+--- latexml.orig/lib/LaTeXML/Common/Config.pm	2021-01-10 22:29:46.766285808 +0100
++++ latexml/lib/LaTeXML/Common/Config.pm	2021-01-10 22:29:46.754285737 +0100
+@@ -946,7 +946,7 @@
+ 
+ =item C<--base>=I<dir>
+ 
+-Sepcifies the base working directory for the conversion server.
++Specifies the base working directory for the conversion server.
+     Useful when converting sets of documents that use relative paths.
+ 
+ =item C<--log>=I<file>
+@@ -972,7 +972,7 @@
+ =item C<--preload>=I<module>
+ 
+ Requests the loading of an optional module or package.  This may be useful if the TeX code
+-    does not specificly require the module (eg. through input or usepackage).
++    does not specifically require the module (eg. through input or usepackage).
+     For example, use C<--preload=LaTeX.pool> to force LaTeX mode.
+ 
+ =item C<--preamble>=I<file>
+@@ -1259,7 +1259,7 @@
+ 
+ This option determines the way that URLs within the documents
+ are formatted, depending on the way they are intended to be served.
+-The default, C<server>, eliminates unneccessary
++The default, C<server>, eliminates unnecessary
+ trailing C<index.html>.  With C<negotiated>, the trailing
+ file extension (typically C<html> or C<xhtml>) are eliminated.
+ The scheme C<file> preserves complete (but relative) urls
+Index: latexml/lib/LaTeXML/Common/Locator.pm
+===================================================================
+--- latexml.orig/lib/LaTeXML/Common/Locator.pm	2021-01-10 22:29:46.766285808 +0100
++++ latexml/lib/LaTeXML/Common/Locator.pm	2021-01-10 22:29:46.754285737 +0100
+@@ -146,7 +146,7 @@
+ containing the line and column numbers of the start of the range in the source
+ file, or undef if unknown. C<$toLine> and C<$toCol> should be the integers
+ containing the line and column numbers of the end of the range, or undef 
+-if a point is being refered to. 
++if a point is being referred to.
+ 
+ =item C<< $locator = LaTeXML::Common::Locator->newRange($from, $to); >>
+ 
+@@ -179,7 +179,7 @@
+ 
+ =item C<< $source = $locator->getShortSource($stringSource); >>
+ 
+-Gets a short string refering to the source of this locator. 
++Gets a short string referring to the source of this locator.
+ C<$stringSource> will be used if the source refers to an
+ anonymous or literal string input. 
+ 
+Index: latexml/lib/LaTeXML/Common/Object.pm
+===================================================================
+--- latexml.orig/lib/LaTeXML/Common/Object.pm	2021-01-10 22:29:46.766285808 +0100
++++ latexml/lib/LaTeXML/Common/Object.pm	2021-01-10 22:29:46.754285737 +0100
+@@ -255,7 +255,7 @@
+ =item C<< $boole = $object->equals($other); >>
+ 
+ Returns whether $object and $other are equal.  Should perform
+-a deep comparision, but the default implementation just compares
++a deep comparison, but the default implementation just compares
+ for object identity.
+ 
+ =item C<< $boole = $object->isaToken; >>
+Index: latexml/lib/LaTeXML/Core/Array.pm
+===================================================================
+--- latexml.orig/lib/LaTeXML/Core/Array.pm	2021-01-10 22:29:46.766285808 +0100
++++ latexml/lib/LaTeXML/Core/Array.pm	2021-01-10 22:29:46.754285737 +0100
+@@ -110,7 +110,7 @@
+   close     the closing delimiter eg "}"
+   separator the separator between items, eg ","
+   itemopen  the opening delimiter for each item
+-  itemclose the closeing delimiter for each item
++  itemclose the closing delimiter for each item
+ 
+ =back
+ 
+Index: latexml/lib/LaTeXML/Core/KeyVal.pm
+===================================================================
+--- latexml.orig/lib/LaTeXML/Core/KeyVal.pm	2021-01-10 22:29:46.766285808 +0100
++++ latexml/lib/LaTeXML/Core/KeyVal.pm	2021-01-10 22:30:44.766621148 +0100
+@@ -1,6 +1,6 @@
+ # /=====================================================================\ #
+ # |  LaTeXML::Core::KeyVal                                              | #
+-# | Key-Value Defintions in LaTeXML                                     | #
++# | Key-Value Definitions in LaTeXML                                     | #
+ # |=====================================================================| #
+ # | Thanks to Tom Wiesing <tom.wiesing@gmail.com>                       | #
+ # | Part of LaTeXML:                                                    | #
+@@ -409,7 +409,7 @@
+ 
+ =head1 NAME
+ 
+-C<LaTeXML::Core::KeyVal> - Key-Value Defintions in LaTeXML
++C<LaTeXML::Core::KeyVal> - Key-Value Definitions in LaTeXML
+ 
+ =head1 DESCRIPTION
+ 
+@@ -555,19 +555,19 @@
+ 
+ =item C<< $keyval->defineOrdinary($code); >>
+ 
+-Helper function to define $STATE neccesary for an ordinary key. 
++Helper function to define $STATE necessary for an ordinary key. 
+ 
+ =item C<< $keyval->defineCommand($code, $macroprefix); >>
+ 
+-Helper function to define $STATE neccesary for a command key. 
++Helper function to define $STATE necessary for a command key. 
+ 
+ =item C<< $keyval->defineChoice($code, $mismatch, $choices, $normalize, $bin); >>
+ 
+-Helper function to define $STATE neccesary for an choice key. 
++Helper function to define $STATE necessary for an choice key. 
+ 
+ =item C<< $keyval->defineBoolean($code, $mismatch, $macroprefix); >>
+ 
+-Helper function to define $STATE neccesary for a boolean key. 
++Helper function to define $STATE necessary for a boolean key. 
+ 
+ =item C<< disabled = $keyval->isDisabled(); >>
+ 
+@@ -602,7 +602,7 @@
+ Reverts this KeyVal with a given I<value> (or the default if I<IsDefault> is set)
+ and punctuation and assignment tokens. 
+ If I<compact> is given, spaces will be omitted when possible. 
+-The I<isDefault> parameter indicates if appropriate seperation tokens should be
++The I<isDefault> parameter indicates if appropriate separation tokens should be
+ inserted. 
+ 
+ =item C<< $str = $keyval->toString(); >>
+Index: latexml/lib/LaTeXML/Core/KeyVals.pm
+===================================================================
+--- latexml.orig/lib/LaTeXML/Core/KeyVals.pm	2021-01-10 22:29:46.766285808 +0100
++++ latexml/lib/LaTeXML/Core/KeyVals.pm	2021-01-10 22:31:15.674797053 +0100
+@@ -648,7 +648,7 @@
+ C<'KV'>. If given, prefix should be a string. 
+ 
+ I<keysets> should be a list of keysets to find keys inside of. If given, it
+-should either be reference to a list of strings or a comma-seperated string. 
++should either be reference to a list of strings or a comma-separated string. 
+ This argument defaults to C<'_anonymous_'>. 
+ 
+ Furthermore, the KeyVals constructor accepts a variety of options that can
+@@ -657,7 +657,7 @@
+ I<punct> and I<assign>. 
+ 
+ I<setAll> is a flag that, if set, ensures that keys will be set in all existing
+-keysets, instad of only in the first one. 
++keysets, instead of only in the first one. 
+ 
+ I<setInternals> is a flag that, if set, ensures that certain 'xkeyval' package
+ internals are set during key digestion. 
+@@ -672,7 +672,7 @@
+ key macro which is then extended to contain a comman-separated list of the
+ undefined keys. 
+ 
+-I<hookMissing> allows to call a specific macro if a single key is unknown during
++I<hookMissing> allows one to call a specific macro if a single key is unknown during
+ key digestion. 
+ 
+ The options I<open>, I<close>, I<punct> and I<assign> optionally contain the 
+@@ -864,7 +864,7 @@
+ 
+ =item C<< $str = $keyvals->toString(); >>
+ 
+-Turns this object into a key=value comma seperated string. 
++Turns this object into a key=value comma separated string. 
+ 
+ =back
+ 
+Index: latexml/lib/LaTeXML/Core/State.pm
+===================================================================
+--- latexml.orig/lib/LaTeXML/Core/State.pm	2021-01-10 22:29:46.766285808 +0100
++++ latexml/lib/LaTeXML/Core/State.pm	2021-01-10 22:29:46.754285737 +0100
+@@ -766,7 +766,7 @@
+ 
+ A C<LaTeXML::Core::State> object stores the current state of processing.
+ It recording catcodes, variables values, definitions and so forth,
+-as well as mimicing TeX's scoping rules.
++as well as mimicking TeX's scoping rules.
+ 
+ =head2 Access to State and Processing
+ 
+@@ -785,7 +785,7 @@
+ =head2 Scoping
+ 
+ The assignment methods, described below, generally take a C<$scope> argument, which
+-determines how the assignment is made.  The allowed values and thier implications are:
++determines how the assignment is made.  The allowed values and their implications are:
+ 
+  global   : global assignment.
+  local    : local assignment, within the current grouping.
+@@ -833,7 +833,7 @@
+ to the given scoping rule.
+ 
+ Values are also used to specify most configuration parameters (which can
+-therefor also be scoped).  The recognized configuration parameters are:
++therefore also be scoped).  The recognized configuration parameters are:
+ 
+  VERBOSITY         : the level of verbosity for debugging
+                      output, with 0 being default.
+Index: latexml/lib/LaTeXML/Package.pm
+===================================================================
+--- latexml.orig/lib/LaTeXML/Package.pm	2021-01-10 22:29:46.766285808 +0100
++++ latexml/lib/LaTeXML/Package.pm	2021-01-10 22:29:46.754285737 +0100
+@@ -2865,7 +2865,7 @@
+ and L</Primitives>, which are digested within the L<LaTeXML::Core::Stomach>
+ to produce L<LaTeXML::Core::Box>, L<LaTeXML::Core::List>.
+ A key additional feature is the L</Constructors>:
+-when digested they generate a L<LaTeXML::Core::Whatsit> which, upon absorbtion by
++when digested they generate a L<LaTeXML::Core::Whatsit> which, upon absorption by
+ L<LaTeXML::Core::Document>, inserts text or XML fragments in the final document tree.
+ 
+ 
+@@ -2886,7 +2886,7 @@
+ 
+ =head3 Prototypes
+ 
+-LaTeXML uses a more convienient method of specifying parameter patterns for
++LaTeXML uses a more convenient method of specifying parameter patterns for
+ control sequences. The first argument to each of these defining forms
+ (C<DefMacro>, C<DefPrimive>, etc) is a I<prototype> consisting of the control
+ sequence being defined along with the specification of parameters required by the control sequence.
+@@ -3298,9 +3298,9 @@
+ invoking the control sequence will generate an arbitrary XML
+ fragment in the document tree.  More specifically: during digestion, the arguments
+ will be read and digested, creating a L<LaTeXML::Core::Whatsit> to represent the object. During
+-absorbtion by the L<LaTeXML::Core::Document>, the C<Whatsit> will generate the XML fragment according
++absorption by the L<LaTeXML::Core::Document>, the C<Whatsit> will generate the XML fragment according
+ to I<replacement>. The I<replacement> can be C<I<code>($document,@args,%properties)>
+-which is called during document absorbtion to create the appropriate XML
++which is called during document absorption to create the appropriate XML
+ (See the methods of L<LaTeXML::Core::Document>).
+ 
+ More conveniently, I<replacement> can be an pattern: simply a bit of XML as a string
+@@ -3329,7 +3329,7 @@
+ 
+ =item C<^>
+ 
+-If the constuctor I<begins> with C<^>, the XML fragment is allowed to I<float up>
++If the constructor I<begins> with C<^>, the XML fragment is allowed to I<float up>
+ to a parent node that is allowed to contain it, according to the Document Type.
+ 
+ =back
+@@ -3429,7 +3429,7 @@
+ 
+ =item C<nargs=E<gt>I<nargs>>
+ 
+-This gives a number of args for cases where it can't be infered directly
++This gives a number of args for cases where it can't be inferred directly
+ from the I<prototype> (eg. when more args are explicitly read by hooks).
+ 
+ =back
+@@ -3607,7 +3607,7 @@
+ 
+ =item C<afterDigest=E<gt>I<code>($stomach,$whatsit)>
+ 
+-This hook is simlar to C<DefConstructor>'s C<afterDigest>
++This hook is similar to C<DefConstructor>'s C<afterDigest>
+ but it applies to the C<\end{environment}> control sequence.
+ Note, however that the Whatsit is only for the ending control sequence,
+ I<not> the Whatsit for the environment as a whole.
+@@ -3851,7 +3851,7 @@
+ or I<tokens> (which will be macro expanded), to provide the value for the option,
+ or it can be a code reference which is treated as a primitive for side-effect.
+ 
+-If a package or class wants to accomodate options, it should start
++If a package or class wants to accommodate options, it should start
+ with one or more C<DeclareOptions>, followed by C<ProcessOptions()>.
+ 
+ =item C<PassOptions(I<name>, I<ext>, I<@options>); >
+@@ -3880,7 +3880,7 @@
+ Arranges for I<@stuff> to be carried out after the preamble, at the beginning of the document.
+ I<@stuff> should typically be macro-level stuff, but carried out for side effect;
+ it should be tokens, tokens lists, strings (which will be tokenized),
+-or C<I<code>($gullet)> which would yeild tokens to be expanded.
++or C<I<code>($gullet)> which would yield tokens to be expanded.
+ 
+ This operation is useful for style files loaded with C<--preload> or document specific
+ customization files (ie. ending with C<.latexml>); normally the contents would be executed
+@@ -4332,7 +4332,7 @@
+ to the given scoping rule.
+ 
+ Values are also used to specify most configuration parameters (which can
+-therefor also be scoped).  The recognized configuration parameters are:
++therefore also be scoped).  The recognized configuration parameters are:
+ 
+  VERBOSITY         : the level of verbosity for debugging
+                      output, with 0 being default.
+Index: latexml/lib/LaTeXML/Post/MathML.pm
+===================================================================
+--- latexml.orig/lib/LaTeXML/Post/MathML.pm	2021-01-10 22:29:46.766285808 +0100
++++ latexml/lib/LaTeXML/Post/MathML.pm	2021-01-10 22:29:46.754285737 +0100
+@@ -1929,7 +1929,7 @@
+ 
+ =item C<pmml_row(@items)>
+ 
+-This wraps an C<m:mrow> around the already converted C<@items> if neeed;
++This wraps an C<m:mrow> around the already converted C<@items> if need;
+ That is, if there is only a single item it is returned without the C<m:mrow>.
+ 
+ =item C<pmml_unrow($pmml)>
