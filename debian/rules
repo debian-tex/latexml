@@ -14,6 +14,7 @@ build-stamp:
 	# Add here commands to compile the package.
 	perl Makefile.PL INSTALLDIRS=vendor NOMKTEXLSR=1
 	$(MAKE)
+	#make test
 
 	touch build-stamp
 
@@ -42,7 +43,7 @@ binary-indep: build install
 	dh_testroot
 	dh_installchangelogs
 	dh_installdocs README.pod
-	dh_installexamples --exclude=*.t
+	dh_installexamples
 	dh_installman
 	dh_link usr/share/texmf/doc/latexml/manual.pdf \
 		usr/share/doc/latexml/manual.pdf
