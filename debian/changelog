@@ -12,6 +12,7 @@ latexml (0.8.5-1) UNRELEASED; urgency=medium
     - texlive-lang-german
     - texlive-science
   * Add sample files to package.
+  * Bump Standards Version to 4.5.1, no changes needed.
 
   * Lintian:
     - I: quilt-patch-missing-description
