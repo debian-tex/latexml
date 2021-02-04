@@ -33,8 +33,8 @@ install: build
 	$(MAKE) pure_install INSTALLDIRS=vendor DESTDIR=`pwd`/debian/$(main_package) \
 	INSTALLTEXMFDIR=/usr/share/texmf/tex/latex/latexml
 	# install documentation file
-	mkdir -p debian/latexml/usr/share/texmf/doc/latexml
-	cp manual.pdf debian/latexml/usr/share/texmf/doc/latexml/
+	# mkdir -p debian/latexml/usr/share/texmf/doc/latexml
+	# cp manual.pdf debian/latexml/usr/share/texmf/doc/latexml/
 	find debian/latexml -type f -name .packlist | xargs rm -f
 
 # Build architecture-independent files here.
@@ -42,12 +42,12 @@ binary-indep: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs
-	dh_installdocs README.pod
+	dh_installdocs
 	dh_installexamples
 	dh_installman
 	dh_link
 	dh_installtex
-	dh_compress
+	dh_compress -X.pdf
 	dh_fixperms
 	dh_perl
 	dh_installdeb
