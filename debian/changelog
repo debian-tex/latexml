@@ -1,5 +1,6 @@
 latexml (0.8.5-2) UNRELEASED; urgency=medium
 
+  * switch to dh sequencer.
   * Create d/links instead of arguments in d/rules.
   * Remove make-orig-tar target from d/rules.
   * Install manual.pdf in /u/s/doc, symlink is in texmf-tree.

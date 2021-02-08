@@ -6,30 +6,17 @@
 
 main_package=latexml
 
-build: build-arch build-indep
-build-arch: build-stamp
-build-indep: build-stamp
-build-stamp:
-	dh_testdir
+%:
+	dh $@ --with tex
+
+override_dh_auto_build:
 	# Add here commands to compile the package.
 	perl Makefile.PL INSTALLDIRS=vendor NOMKTEXLSR=1
 	$(MAKE)
-	make test
 
 	touch build-stamp
 
-clean:
-	dh_testdir
-	#dh_testroot
-	if [ -f Makefile ]; then $(MAKE) clean ;fi
-	dh_clean
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_prep
-	dh_installdirs
-
+override_dh_auto_install:
 	$(MAKE) pure_install INSTALLDIRS=vendor DESTDIR=`pwd`/debian/$(main_package) \
 	INSTALLTEXMFDIR=/usr/share/texmf/tex/latex/latexml
 	# install documentation file
@@ -38,26 +25,5 @@ install: build
 	find debian/latexml -type f -name .packlist | xargs rm -f
 
 # Build architecture-independent files here.
-binary-indep: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs
-	dh_installdocs
-	dh_installexamples
-	dh_installman
-	dh_link
-	dh_installtex
+override_dh_compress:
 	dh_compress -X.pdf
-	dh_fixperms
-	dh_perl
-	dh_installdeb
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-# Build architecture-dependent files here.
-binary-arch: build-stamp
-# We have nothing to do by default.
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install
