@@ -2,6 +2,7 @@ latexml (0.8.5-2) UNRELEASED; urgency=medium
 
   * Switch to dh sequencer, mark huge TL packages as only needed
     for build profiles including checks.
+  * DEP 5 copyright.
   * Create d/links instead of arguments in d/rules.
   * Remove make-orig-tar target from d/rules.
   * Install manual.pdf in /u/s/doc, symlink is in texmf-tree.
