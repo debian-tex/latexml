@@ -1,6 +1,6 @@
 Description: Replace "#!/usr/bin/env perl" by "#!/usr/bin/perl -w"
 Origin: Norbert Preining <preining@debian.org>
-Forwarded: no
+Forwarded: Not needed.
 Author: Norbert Preining <preining@debian.org>
 Last-Update: Mon, 13 Aug 2018 09:29:28 +0900
 
