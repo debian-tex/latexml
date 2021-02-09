@@ -1,7 +1,7 @@
 Source: latexml
 Section: tex
 Priority: optional
-Maintainer: Debian TeX maintainers <debian-tex-maint@lists.debian.org>
+Maintainer: Debian TeX Task Force <debian-tex-maint@lists.debian.org>
 Uploaders: Norbert Preining <norbert@preining.info>,
 	Peter Ralph <petrel.harp@gmail.com>,
 	Hilmar Preusse <hille42@web.de>
