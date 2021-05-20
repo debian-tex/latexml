@@ -1,9 +1,10 @@
-latexml (0.8.5-3) UNRELEASED; urgency=medium
+latexml (0.8.5-3) unstable; urgency=medium
 
   * Add version to dep on libpod-parser-perl (>= 1.63).
     (Closes: #988359)
+  * Set Maintainer field to "Debian TeX Task Force".
 
- -- Hilmar Preusse <hille42@web.de>  Thu, 20 May 2021 10:34:52 +0200
+ -- Hilmar Preusse <hille42@web.de>  Thu, 20 May 2021 11:00:34 +0200
 
 latexml (0.8.5-2) unstable; urgency=medium
 
