@@ -34,7 +34,26 @@ Vcs-Browser: https://github.com/debian-tex/latexml
 
 Package: latexml
 Architecture: all
-Depends: ${perl:Depends}, ${misc:Depends}, libparse-recdescent-perl, libxml2, libxml-libxml-perl, libxslt1.1, libxml-libxslt-perl, libuuid-tiny-perl, libarchive-zip-perl, libio-string-perl, libjson-xs-perl, libwww-perl, liburi-perl, libfile-which-perl, libimage-size-perl, imagemagick, libimage-magick-perl, texlive-latex-base, libtext-unidecode-perl, libpod-parser-perl
+Depends: ${perl:Depends},
+	${misc:Depends},
+	libparse-recdescent-perl,
+	libxml2,
+	libxml-libxml-perl,
+	libxslt1.1,
+	libxml-libxslt-perl,
+	libuuid-tiny-perl,
+	libarchive-zip-perl,
+	libio-string-perl,
+	libjson-xs-perl,
+	libwww-perl,
+	liburi-perl,
+	libfile-which-perl,
+	libimage-size-perl,
+	imagemagick,
+	libimage-magick-perl,
+	texlive-latex-base,
+	libtext-unidecode-perl,
+	libpod-parser-perl (>= 1.63)
 Description: LaTeX to XML Converter
  latexml is a program, written in Perl, that attempts to faithfully mimic
  TeX's behaviour, but produces XML instead of dvi. The document model of

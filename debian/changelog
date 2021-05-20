@@ -1,3 +1,10 @@
+latexml (0.8.5-3) UNRELEASED; urgency=medium
+
+  * Add version to dep on libpod-parser-perl (>= 1.63).
+    (Closes: #988359)
+
+ -- Hilmar Preusse <hille42@web.de>  Thu, 20 May 2021 10:34:52 +0200
+
 latexml (0.8.5-2) unstable; urgency=medium
 
   * Switch to dh sequencer, mark huge TL packages as only needed
