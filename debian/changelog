@@ -1,3 +1,12 @@
+latexml (0.8.6-1) UNRELEASED; urgency=medium
+
+  * New upstream release, disable obsolete patches.
+    - Fixed "executable-not-elf-or-script" in upstream.
+  * Disable test suite during build, will be turned into
+    autopkgtest later.
+
+ -- Hilmar Preusse <hille42@web.de>  Sun, 03 Oct 2021 23:10:50 +0200
+
 latexml (0.8.5-3) unstable; urgency=medium
 
   * Add version to dep on libpod-parser-perl (>= 1.63).

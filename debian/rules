@@ -24,6 +24,9 @@ override_dh_auto_install:
 	# cp manual.pdf debian/latexml/usr/share/texmf/doc/latexml/
 	find debian/latexml -type f -name .packlist | xargs rm -f
 
+override_dh_auto_test:
+        : do nothing here, otherwise test suite is run.
+
 # Build architecture-independent files here.
 override_dh_compress:
 	dh_compress -X.pdf
