@@ -18,4 +18,4 @@ Depends: libparse-recdescent-perl,
         texlive-lang-french,
         texlive-lang-german,
         texlive-science
-Restrictions: allow-stderr
+Restrictions: allow-stderr, build-needed

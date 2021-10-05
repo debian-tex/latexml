@@ -1,3 +1,9 @@
+latexml (0.8.6-2) unstable; urgency=medium
+
+  * Test suite: add "Restrictions: build-needed".
+
+ -- Hilmar Preusse <hille42@web.de>  Tue, 05 Oct 2021 09:28:33 +0200
+
 latexml (0.8.6-1) unstable; urgency=medium
 
   * New upstream release, disable obsolete patches.
