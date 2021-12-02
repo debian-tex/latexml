@@ -1,3 +1,10 @@
+latexml (0.8.6-3) UNRELEASED; urgency=medium
+
+  * Add patch from pull request #1716 to fix test suite w/ TL 2021.
+    https://github.com/brucemiller/LaTeXML/pull/1716
+
+ -- Hilmar Preusse <hille42@web.de>  Thu, 02 Dec 2021 11:10:22 +0100
+
 latexml (0.8.6-2) unstable; urgency=medium
 
   * Test suite: add "Restrictions: build-needed".
