@@ -1,5 +1,6 @@
 Tests: test-suite
-Depends: libparse-recdescent-perl,
+Depends: make,
+        libparse-recdescent-perl,
         libimage-size-perl,
         libarchive-zip-perl,
         libfile-which-perl,

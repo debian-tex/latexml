@@ -1,3 +1,9 @@
+latexml (0.8.6-4) UNRELEASED; urgency=medium
+
+  * Add "make" to Dep of test suite.
+
+ -- Hilmar Preusse <hille42@web.de>  Mon, 27 Jun 2022 12:03:26 +0200
+
 latexml (0.8.6-3) unstable; urgency=medium
 
   * Add patch from pull request #1716 to fix test suite w/ TL 2021.
