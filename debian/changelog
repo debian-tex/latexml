@@ -1,3 +1,9 @@
+latexml (0.8.6-5) UNRELEASED; urgency=medium
+
+  * Add patch from upstream to fix test suite again. (Closes: #1021658)
+
+ -- Hilmar Preusse <hille42@web.de>  Thu, 27 Oct 2022 00:00:09 +0200
+
 latexml (0.8.6-4) unstable; urgency=medium
 
   * Add patch from upstream to fix test suite.
