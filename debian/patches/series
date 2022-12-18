@@ -1,5 +1,5 @@
-fix-perl-shebang
+#fix-perl-shebang
 #spelling_errors
-pull_request_1716.patch
-pull_request_1874.patch
-pull_request_1969.patch
+#pull_request_1716.patch
+#pull_request_1874.patch
+#pull_request_1969.patch
