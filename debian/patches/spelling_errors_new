@@ -1,0 +1,90 @@
+Description: Fix spelling errors in source code.
+Origin: Hilmar Preusse <hille42@web.de>
+Forwarded: Not done, could be done.
+Author: Hilmar Preusse <hille42@web.de>
+Last-Update: 20221218
+
+--- latexml.orig/lib/LaTeXML/Core/KeyVal.pm
++++ latexml/lib/LaTeXML/Core/KeyVal.pm
+@@ -274,19 +274,19 @@
+ 
+ =item C<< $keyval->defineOrdinary($code); >>
+ 
+-Helper function to define $STATE neccesary for an ordinary key. 
++Helper function to define $STATE necessary for an ordinary key. 
+ 
+ =item C<< $keyval->defineCommand($code, $macroprefix); >>
+ 
+-Helper function to define $STATE neccesary for a command key. 
++Helper function to define $STATE necessary for a command key. 
+ 
+ =item C<< $keyval->defineChoice($code, $mismatch, $choices, $normalize, $bin); >>
+ 
+-Helper function to define $STATE neccesary for an choice key. 
++Helper function to define $STATE necessary for an choice key. 
+ 
+ =item C<< $keyval->defineBoolean($code, $mismatch, $macroprefix); >>
+ 
+-Helper function to define $STATE neccesary for a boolean key. 
++Helper function to define $STATE necessary for a boolean key. 
+ 
+ =back
+ 
+--- latexml.orig/lib/LaTeXML/Core/KeyVals.pm
++++ latexml/lib/LaTeXML/Core/KeyVals.pm
+@@ -524,7 +524,7 @@
+ C<'KV'>. If given, prefix should be a string. 
+ 
+ I<keysets> should be a list of keysets to find keys inside of. If given, it
+-should either be reference to a list of strings or a comma-seperated string. 
++should either be reference to a list of strings or a comma-separated string. 
+ This argument defaults to C<'_anonymous_'>. 
+ 
+ Furthermore, the KeyVals constructor accepts a variety of options that can
+@@ -532,7 +532,7 @@
+ I<skip>, I<skipMissing>, I<hookMissing>, I<open>, I<close>.
+ 
+ I<setAll> is a flag that, if set, ensures that keys will be set in all existing
+-keysets, instad of only in the first one. 
++keysets, instead of only in the first one. 
+ 
+ I<setInternals> is a flag that, if set, ensures that certain 'xkeyval' package
+ internals are set during key digestion. 
+@@ -547,7 +547,7 @@
+ key macro which is then extended to contain a comman-separated list of the
+ undefined keys. 
+ 
+-I<hookMissing> allows to call a specific macro if a single key is unknown during
++I<hookMissing> allows one to call a specific macro if a single key is unknown during
+ key digestion. 
+ 
+ =back
+@@ -695,7 +695,7 @@
+ 
+ =item C<< $str = $keyvals->toString(); >>
+ 
+-Turns this object into a key=value comma seperated string. 
++Turns this object into a key=value comma separated string. 
+ 
+ =back
+ 
+--- latexml.orig/lib/LaTeXML/Common/Locator.pm
++++ latexml/lib/LaTeXML/Common/Locator.pm
+@@ -146,7 +146,7 @@
+ containing the line and column numbers of the start of the range in the source
+ file, or undef if unknown. C<$toLine> and C<$toCol> should be the integers
+ containing the line and column numbers of the end of the range, or undef 
+-if a point is being refered to. 
++if a point is being referred to. 
+ 
+ =item C<< $locator = LaTeXML::Common::Locator->newRange($from, $to); >>
+ 
+@@ -179,7 +179,7 @@
+ 
+ =item C<< $source = $locator->getShortSource($stringSource); >>
+ 
+-Gets a short string refering to the source of this locator. 
++Gets a short string referring to the source of this locator. 
+ C<$stringSource> will be used if the source refers to an
+ anonymous or literal string input. 
+ 

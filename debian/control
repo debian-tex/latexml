@@ -19,7 +19,7 @@ Build-Depends: debhelper-compat (= 13),
 	libxml-libxslt-perl,
 	tex-common,
 	texlive-latex-base
-Standards-Version: 4.5.1
+Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://dlmf.nist.gov/LaTeXML/
 Vcs-Git: https://github.com/debian-tex/latexml.git

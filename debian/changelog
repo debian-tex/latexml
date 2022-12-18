@@ -1,9 +1,9 @@
 latexml (0.8.7-1) UNRELEASED; urgency=medium
 
   * New upstream release, disable all patches.
-
     This version is compatible to latest snapshot of TL 2022
-    (Closes #1025980).
+    (Closes: #1025980).
+  * Bump Standards version to 4.6.2, no changes needed.
 
  -- Hilmar Preusse <hille42@web.de>  Sun, 18 Dec 2022 19:34:08 +0100
 
