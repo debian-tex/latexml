@@ -2,4 +2,5 @@
 
 set -e
 
-make -j1 test TEST_VERBOSE=1
+make -j2 test TEST_VERBOSE=1
+#make -j2 test CI=true TEST_VERBOSE=1

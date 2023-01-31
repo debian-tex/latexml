@@ -1,0 +1,57 @@
+diff --git a/lib/LaTeXML/Util/Test.pm b/lib/LaTeXML/Util/Test.pm
+index 6b49d3201..fca490ffb 100644
+--- a/lib/LaTeXML/Util/Test.pm
++++ b/lib/LaTeXML/Util/Test.pm
+@@ -86,13 +86,15 @@ sub check_requirements {
+     next unless $reqmts;
+     my @required_packages = ();
+     my $texlive_min       = 0;
++    my $CI_only           = 0;
+     if (!(ref $reqmts)) {
+       @required_packages = ($reqmts); }
+     elsif (ref $reqmts eq 'ARRAY') {
+       @required_packages = @$reqmts; }
+     elsif (ref $reqmts eq 'HASH') {
+       @required_packages = (ref $$reqmts{packages} eq 'ARRAY' ? @{ $$reqmts{packages} } : $$reqmts{packages});
+-      $texlive_min       = $$reqmts{texlive_min} || 0; }
++      $texlive_min       = $$reqmts{texlive_min} || 0;
++      $CI_only           = $$reqmts{CI_only}     || 0; }
+     foreach my $reqmt (@required_packages) {
+       if (pathname_kpsewhich($reqmt) || pathname_find($reqmt)) { }
+       else {
+@@ -105,6 +107,11 @@ sub check_requirements {
+       my $message = "Minimal texlive $texlive_min requirement not met for $test";
+       diag("Skip: $message");
+       skip($message, $ntests);
++      return 0; }
++    if ($CI_only && !$ENV{"CI"}) {
++      my $message = "Test $test only runs in continuous integration";
++      diag("Skip: $message");
++      skip($message, $ntests);
+       return 0; } }
+   return 1; }
+ 
+diff --git a/t/50_structure.t b/t/50_structure.t
+index 8d7b3cbcc..d172f02b6 100644
+--- a/t/50_structure.t
++++ b/t/50_structure.t
+@@ -10,4 +10,5 @@ latexml_tests("t/structure",
+     csquotes   => 'csquotes.sty',
+     glossary   => {
+       texlive_min => 2016,
++      CI_only => 1,
+       packages    => 'glossaries.sty' } });
+diff --git a/t/80_complex.t b/t/80_complex.t
+index f6f2b4795..7694ba560 100644
+--- a/t/80_complex.t
++++ b/t/80_complex.t
+@@ -7,4 +7,8 @@ use LaTeXML::Util::Test;
+ latexml_tests("t/complex",
+   requires => {
+     cleveref_minimal => 'cleveref.sty',
+-    si               => { packages => 'siunitx.sty', texlive_min => 2015 } });
++    si => {
++      packages => 'siunitx.sty',
++      CI_only=>1,
++      texlive_min => 2015
++    } });
