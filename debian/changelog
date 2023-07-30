@@ -1,3 +1,10 @@
+latexml (0.8.7-3) unstable; urgency=medium
+
+  * Declare test for babel/greek to CI-only. Underlying issue
+    (#2175) will be solved in next latexml version.
+
+ -- Hilmar Preusse <hille42@web.de>  Sun, 30 Jul 2023 13:27:24 +0200
+
 latexml (0.8.7-2) unstable; urgency=medium
 
   * Move tests, which fail with latest TL snapshot, to CI_only.

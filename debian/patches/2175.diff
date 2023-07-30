@@ -1,0 +1,14 @@
+--- latexml.orig/t/81_babel.t
++++ latexml/t/81_babel.t
+@@ -10,7 +10,10 @@
+       packages => ['csquotes.sty', 'frenchb.ldf', 'germanb.ldf'] },
+     numprints => 'numprint.sty',
+     german    => 'germanb.ldf',
+-    greek     => ['greek.ldf', 'lgrenc.def'],
++    greek     => {
++	CI_only=>1,
++	packages => ['greek.ldf', 'lgrenc.def']
++       },
+     french    => ['frenchb.ldf', 'numprint.sty'],
+     page545   => ['germanb.ldf', 'frenchb.ldf'] },
+ # babel is a bit iffy between versions, especially in introducing/retracting line breaks in the language macros
