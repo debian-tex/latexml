@@ -1,3 +1,9 @@
+latexml (0.8.7-4) unstable; urgency=medium
+
+  * Remove workaround/override for #2175, add patch for it.
+
+ -- Hilmar Preusse <hille42@web.de>  Sat, 14 Oct 2023 00:12:41 +0200
+
 latexml (0.8.7-3) unstable; urgency=medium
 
   * Declare test for babel/greek to CI-only. Underlying issue
