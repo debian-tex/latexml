@@ -1,3 +1,11 @@
+latexml (0.8.8-1) unstable; urgency=medium
+
+  * New upstream release
+    - Disable obsolete patches.
+    - Add DEP-3 header to remaining patch.
+
+ -- Hilmar Preusse <hille42@web.de>  Tue, 27 Feb 2024 21:25:52 +0100
+
 latexml (0.8.7-4) unstable; urgency=medium
 
   * Remove workaround/override for #2175, add patch for it.

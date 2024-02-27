@@ -2,7 +2,7 @@ Description: Fix spelling errors in source code.
 Origin: Hilmar Preusse <hille42@web.de>
 Forwarded: https://github.com/brucemiller/LaTeXML/issues/2331
 Author: Hilmar Preusse <hille42@web.de>
-Last-Update: 20221218
+Last-Update: 2022-12-18
 
 --- latexml.orig/lib/LaTeXML/Core/KeyVal.pm
 +++ latexml/lib/LaTeXML/Core/KeyVal.pm
