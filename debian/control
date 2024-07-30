@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian TeX Task Force <debian-tex-maint@lists.debian.org>
 Uploaders: Norbert Preining <norbert@preining.info>,
 	Peter Ralph <petrel.harp@gmail.com>,
-	Hilmar Preusse <hille42@web.de>
+	Hilmar Preuße <hille42@debian.org>
 Build-Depends: debhelper-compat (= 13),
 	libparse-recdescent-perl,
 	libimage-size-perl,
