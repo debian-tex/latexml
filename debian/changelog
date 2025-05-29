@@ -1,3 +1,9 @@
+latexml (0.8.8-3) UNRELEASED; urgency=medium
+
+  * Remove explicit Depends on libxml2 & libxslt1.1 (Closes: #1106715).
+
+ -- Hilmar Preuße <hille42@debian.org>  Thu, 29 May 2025 14:56:13 +0200
+
 latexml (0.8.8-2) unstable; urgency=medium
 
   * Hack: mark (currently) failing test as "CI only".
