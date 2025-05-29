@@ -1,3 +1,9 @@
+Description: Mark failing tests as "CI only".
+Origin: Hilmar Preuße <hille42@debian.org>
+Forwarded: https://github.com/brucemiller/LaTeXML/issues/2434
+Author: Hilmar Preuße <hille42@debian.org>
+Last-Update: 20241105
+
 --- latexml.orig/t/81_babel.t
 +++ latexml/t/81_babel.t
 @@ -7,12 +7,21 @@
