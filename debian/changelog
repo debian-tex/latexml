@@ -1,9 +1,9 @@
-latexml (0.8.8-3) UNRELEASED; urgency=medium
+latexml (0.8.8-3) unstable; urgency=medium
 
   * Remove explicit Depends on libxml2 & libxslt1.1 (Closes: #1106715).
   * Hack: mark babel/french test as "CI only".
 
- -- Hilmar Preuße <hille42@debian.org>  Thu, 29 May 2025 14:56:13 +0200
+ -- Hilmar Preuße <hille42@debian.org>  Fri, 08 Aug 2025 22:02:22 +0200
 
 latexml (0.8.8-2) unstable; urgency=medium
 
