@@ -1,0 +1,13 @@
+--- latexml.orig/t/81_babel.t
++++ latexml/t/81_babel.t
+@@ -17,7 +17,9 @@
+     greek     => { env=>'CI',
+       packages => ['greek.ldf', 'lgrenc.def']
+       },
+-    french    => ['frenchb.ldf', 'numprint.sty'],
++    french    => { env=>'CI',
++      packages => ['frenchb.ldf', 'numprint.sty']
++      },
+     page545   => { env=>'CI',
+       packages => ['germanb.ldf', 'frenchb.ldf']
+       }
