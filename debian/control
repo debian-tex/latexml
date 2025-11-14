@@ -12,13 +12,19 @@ Build-Depends: debhelper-compat (= 13),
 	libfile-which-perl,
 	libio-string-perl,
 	libjson-xs-perl,
+	libpod-parser-perl <!nocheck>,
 	libtext-unidecode-perl,
 	liburi-perl,
 	libwww-perl,
 	libxml-libxml-perl,
 	libxml-libxslt-perl,
 	tex-common,
-	texlive-latex-base
+	texlive-latex-base,
+	texlive-latex-extra <!nocheck>,
+	texlive-lang-cyrillic <!nocheck>,
+	texlive-lang-french <!nocheck>,
+	texlive-lang-german <!nocheck>,
+	texlive-science <!nocheck>
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://dlmf.nist.gov/LaTeXML/
