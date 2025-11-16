@@ -1,1 +1,7 @@
 latexml source: source-is-missing
+latexml source: very-long-line-length-in-source-file 1001 > 512 [t/moderncv/cs_cv.html:323]
+latexml source: very-long-line-length-in-source-file 1061 > 512 [t/complex/figure_mixed_content.tex:71]
+latexml source: very-long-line-length-in-source-file 10776 > 512 [lib/LaTeXML/Common/Font/StandardMetrics.pm:18]
+latexml source: very-long-line-length-in-source-file 1697 > 512 [lib/LaTeXML/resources/RelaxNG/LaTeXML.model:325]
+latexml source: very-long-line-length-in-source-file 540 > 512 [lib/LaTeXML/Post/MathML/OperatorDictionary.pm:180]
+latexml source: very-long-line-length-in-source-file 935 > 512 [lib/LaTeXML/resources/XSLT/LaTeXML-webpage-xhtml.xsl:569]
