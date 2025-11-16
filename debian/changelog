@@ -1,4 +1,4 @@
-latexml (0.8.8-4) UNRELEASED; urgency=medium
+latexml (0.8.8-4) unstable; urgency=medium
 
   * Enable autopkgtest during build.
   * Disable t/fonts/abxtest & t/fonts/mathaccents for now.
@@ -6,7 +6,7 @@ latexml (0.8.8-4) UNRELEASED; urgency=medium
   * Add fixes for DEP-3 headers of patches.
   * Bump Standards version, no changes needed.
 
- -- Hilmar Preuße <hille42@debian.org>  Fri, 14 Nov 2025 22:57:23 +0100
+ -- Hilmar Preuße <hille42@debian.org>  Sun, 16 Nov 2025 17:02:39 +0100
 
 latexml (0.8.8-3) unstable; urgency=medium
 
