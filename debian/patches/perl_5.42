@@ -1,0 +1,30 @@
+Description: Skip tests failing with Perl 5.42.
+ This patch marks two tests as CI only, which will fail after
+ the upload of Perl 5.42. The issue has been forwarded to upstream
+ https://github.com/brucemiller/LaTeXML/issues/2670 .
+ The patch will be disabled, once the issue has been addressed in
+ upstream.
+Author: Hilmar Preuße <hille42@debian.org>
+Bug: https://bugs.debian.org/1120366
+Forwarded: not-needed
+Last-Update: 2025-11-16
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- latexml.orig/t/22_fonts.t
++++ latexml/t/22_fonts.t
+@@ -4,5 +4,13 @@
+ #**********************************************************************
+ use LaTeXML::Util::Test;
+ 
+-latexml_tests("t/fonts");
+-
++latexml_tests("t/fonts",
++  requires => {
++    abxtest => {
++      env => 'CI',
++      packages    => 'expl3.sty' },
++    mathaccents => {
++      env => 'CI',
++      packages    => 'expl3.sty' }
++  }
++);

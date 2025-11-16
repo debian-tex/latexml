@@ -1,6 +1,8 @@
 latexml (0.8.8-4) UNRELEASED; urgency=medium
 
   * Enable autopkgtest during build.
+  * Disable t/fonts/abxtest & t/fonts/mathaccents for now.
+    (Closes: #1120366).
 
  -- Hilmar Preuße <hille42@debian.org>  Fri, 14 Nov 2025 22:57:23 +0100
 
