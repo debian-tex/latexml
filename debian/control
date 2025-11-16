@@ -25,7 +25,7 @@ Build-Depends: debhelper-compat (= 13),
 	texlive-lang-french <!nocheck>,
 	texlive-lang-german <!nocheck>,
 	texlive-science <!nocheck>
-Standards-Version: 4.6.2
+Standards-Version: 4.7.2
 Rules-Requires-Root: no
 Homepage: https://dlmf.nist.gov/LaTeXML/
 Vcs-Git: https://github.com/debian-tex/latexml.git
