@@ -1,4 +1,6 @@
 Description: Mark failing tests as "CI only".
+ Real fix has been published in https://github.com/brucemiller/LaTeXML/pull/2759
+ This patch will be disabled upon next release.
 Forwarded: https://github.com/brucemiller/LaTeXML/issues/2628
 Author: Hilmar Preuße <hille42@debian.org>
 Last-Update: 2025-08-08
